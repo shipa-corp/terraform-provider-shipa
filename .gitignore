@@ -1,0 +1,31 @@
+# IDE
+.idea
+
+# System files
+.DS_Store
+
+### Go ###
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+terraform-provider-shipa
+
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+
+# state files
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+
+
+## Local development files
+.env
+sandbox
+frame-template.yaml
+cluster.yaml
+test_credentials.go

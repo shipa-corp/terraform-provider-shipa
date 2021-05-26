@@ -9,16 +9,9 @@ terraform {
 
 provider "shipa" {}
 
-# Returns all apps
-data "shipa_apps" "all" {}
-
-output "all_apps" {
-  value = data.shipa_apps.all.apps
-}
-
 # Returns specific app
 data "shipa_app" "app" {
-  id = "terraform-app-3"
+  id = shipa_app.tf.app[0].name
 }
 
 output "app" {
@@ -26,25 +19,18 @@ output "app" {
 }
 
 # Returns specific framework
-data "shipa_framework" "f1" {
-  id = "shipa-framework"
+data "shipa_framework" "tf" {
+  id = shipa_framework.tf.framework[0].name
 }
 
 output "my_val" {
-  value = data.shipa_framework.f1
-}
-
-# Returns all frameworks
-data "shipa_frameworks" "all" {}
-
-output "all_frameworks" {
-  value = data.shipa_frameworks.all.frameworks
+  value = data.shipa_framework.tf
 }
 
 # Create framework
 resource "shipa_framework" "tf" {
   framework {
-    name = "test-tf-144"
+    name = "f1"
     provisioner = "kubernetes"
     resources {
       general {
@@ -60,32 +46,16 @@ resource "shipa_framework" "tf" {
         app_quota {
           limit = "2"
         }
-      }
-    }
-  }
-}
-
-resource "shipa_framework" "tf2" {
-  framework {
-    name = "test-tf-1442"
-    provisioner = "kubernetes"
-    resources {
-      general {
-        setup {
-          public = true
-          default = false
+        access {
+          append = [shipa_team.tf.team[0].name]
         }
-        security {
-          disable_scan = true
-          scan_platform_layers = false
-        }
-        router = "traefik"
-        app_quota {
-          limit = "2"
+        plan {
+          name = shipa_plan.tf.plan[0].name
         }
       }
     }
   }
+  depends_on = [shipa_plan.tf, shipa_team.tf]
 }
 
 output "my_tf_framework" {
@@ -97,31 +67,24 @@ resource "shipa_cluster" "tf" {
   cluster {
     name = "cl-1"
     endpoint {
-      addresses = ["https://k8s-api.com:443"]
-      ca_cert = "<<ca_cert here>>"
-      token = "<<token goes here>>"
-      client_key = "key"
+      addresses = ["https://E873062014D66818F6B1E5E19AD27DF0.gr7.us-west-1.eks.amazonaws.com"]
+      ca_cert = file("path/to/cluster/ca-cert")
+      token = "cluster-token-value" //FIXME: file("path/to/cluster/ca-cert") has a bug
     }
     resources {
       frameworks {
         name = [
-          "${shipa_framework.tf.framework[0].name}",
-          "${shipa_framework.tf2.framework[0].name}",
+          shipa_framework.tf.framework[0].name,
           ]
-      }
-      ingress_controllers {
-        type = "traefik"
-        debug = false
-        acme_email = "acme@email.com"
-        acme_server = "127.0.0.1"
       }
     }
   }
+  depends_on = [shipa_framework.tf]
 }
 
 # Create user
 resource "shipa_user" "tf" {
-  email = "user@terraform.com"
+  email = "user@example.com"
   password = "terraform"
 }
 
@@ -129,35 +92,37 @@ resource "shipa_user" "tf" {
 resource "shipa_plan" "tf" {
   plan {
     name = "terraform-plan"
-    teams = ["dev"]
+    teams = [shipa_team.tf.team[0].name]
     cpushare = 4
     memory = 0
     swap = 0
   }
+  depends_on = [shipa_team.tf]
 }
 
 # Create team
-resource "shipa_team" "t2" {
+resource "shipa_team" "tf" {
   team {
-    name = "terraform-team-2"
-    tags = ["dev", "sandbox"]
+    name = "dev"
+    tags = ["dev"]
   }
 }
 
 # Create app
-resource "shipa_app" "app2" {
+resource "shipa_app" "tf" {
   app {
-    name = "terraform-app-3"
-    teamowner = "dev"
-    framework = "test-tf-142"
+    name = "app1"
+    teamowner = shipa_team.tf.team[0].name
+    framework = shipa_framework.tf.framework[0].name
     description = "test description update"
-    tags = ["dev", "sandbox", "updated"]
+    tags = ["dev"]
   }
+  depends_on = [shipa_cluster.tf]
 }
 
 # Set app envs
-resource "shipa_app_env" "env1" {
-  app = "terraform-app-1"
+resource "shipa_app_env" "tf" {
+  app = shipa_app.tf.app[0].name
   app_env {
     envs {
       name = "SHIPA_ENV1"
@@ -173,27 +138,17 @@ resource "shipa_app_env" "env1" {
 }
 
 # Set app cname
-resource "shipa_app_cname" "cname1" {
-  app = "terraform-app-2"
+resource "shipa_app_cname" "tf" {
+  app = shipa_app.tf.app[0].name
   cname = "test.com"
   encrypt = true
 }
 
 # Deploy app
-resource "shipa_app_deploy" "deploy1" {
-  app = "terraform-app-2"
+resource "shipa_app_deploy" "tf" {
+  app = shipa_app.tf.app[0].name
   deploy {
     image = "docker.io/shipasoftware/bulletinboard:1.0"
-    // optional
-    private_image = true
-    registry_user = "Test user"
-    registry_secret = "Test Secret"
-    steps = 2
-    step_weight = 1
-    step_interval = 1
-    port = 8000
-    detach = true
-    message = "Message"
   }
 }
 
@@ -214,5 +169,5 @@ resource "shipa_permission" "p1" {
 # Create role association
 resource "shipa_role_association" "r1" {
   name = "RoleName"
-  email = "terraform@terraform.com"
+  email = shipa_user.tf.email
 }

@@ -179,7 +179,7 @@ func (c *Client) DeleteAppEnvs(appName string, req *CreateAppEnv) error {
 
 type AppCname struct {
 	Cname   string `json:"cname"`
-	Encrypt bool   `json:"encrypt"`
+	Scheme  string  `json:"scheme"`
 }
 
 func (c *Client) CreateAppCname(appName string, req *AppCname) error {

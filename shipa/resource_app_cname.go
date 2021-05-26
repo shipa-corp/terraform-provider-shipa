@@ -45,7 +45,7 @@ func resourceAppCnameCreate(ctx context.Context, d *schema.ResourceData, m inter
 
 	req := &client.AppCname{
 		Cname: cname,
-		Encrypt: encrypt,
+		Scheme: getScheme(encrypt),
 	}
 
 	c := m.(*client.Client)
@@ -94,7 +94,7 @@ func resourceAppCnameUpdate(ctx context.Context, d *schema.ResourceData, m inter
 
 	req := &client.AppCname{
 		Cname: cname,
-		Encrypt: encrypt,
+		Scheme: getScheme(encrypt),
 	}
 
 	// update cname
@@ -118,7 +118,7 @@ func resourceAppCnameDelete(ctx context.Context, d *schema.ResourceData, m inter
 
 	req := &client.AppCname{
 		Cname: cname,
-		Encrypt: encrypt,
+		Scheme: getScheme(encrypt),
 	}
 
 	c := m.(*client.Client)
@@ -132,4 +132,11 @@ func resourceAppCnameDelete(ctx context.Context, d *schema.ResourceData, m inter
 	d.SetId("")
 
 	return diags
+}
+
+func getScheme(encrypt bool) string {
+	if encrypt {
+		return "https"
+	}
+	return "http"
 }

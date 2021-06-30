@@ -36,6 +36,7 @@ func Provider() *schema.Provider {
 			"shipa_role":             resourceRole(),
 			"shipa_permission":       resourcePermission(),
 			"shipa_role_association": resourceRoleAssociation(),
+			"shipa_network_policy":   resourceNetworkPolicy(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"shipa_app":        dataSourceApp(),

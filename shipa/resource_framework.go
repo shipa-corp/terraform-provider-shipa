@@ -287,6 +287,13 @@ var (
 						Type: schema.TypeString,
 					},
 				},
+				"allowed_frameworks": {
+					Type:     schema.TypeList,
+					Optional: true,
+					Elem: &schema.Schema{
+						Type: schema.TypeString,
+					},
+				},
 			},
 		},
 	}
@@ -300,41 +307,44 @@ var (
 					Type:     schema.TypeString,
 					Optional: true,
 				},
-				"port": schemaNetworkPortDetails,
-			},
-		},
-	}
-
-	schemaNetworkPortDetails = &schema.Schema{
-		Type:     schema.TypeList,
-		Optional: true,
-		MaxItems: 1,
-		Elem: &schema.Resource{
-			Schema: map[string]*schema.Schema{
-				"type": {
+				"port": {
 					Type:     schema.TypeInt,
-					Optional: true,
-				},
-				"intval": {
-					Type:     schema.TypeInt,
-					Optional: true,
-				},
-				"strval": {
-					Type:     schema.TypeString,
 					Optional: true,
 				},
 			},
 		},
 	}
+
+	//schemaNetworkPortDetails = &schema.Schema{
+	//	Type:     schema.TypeList,
+	//	Optional: true,
+	//	MaxItems: 1,
+	//	Elem: &schema.Resource{
+	//		Schema: map[string]*schema.Schema{
+	//			"type": {
+	//				Type:     schema.TypeInt,
+	//				Optional: true,
+	//			},
+	//			"intval": {
+	//				Type:     schema.TypeInt,
+	//				Optional: true,
+	//			},
+	//			"strval": {
+	//				Type:     schema.TypeString,
+	//				Optional: true,
+	//			},
+	//		},
+	//	},
+	//}
 
 	schemaNetworkPeer = &schema.Schema{
 		Type:     schema.TypeList,
 		Optional: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
-				"podselector":       schemaNetworkPeerSelector,
-				"namespaceselector": schemaNetworkPeerSelector,
-				"ipblock": {
+				"pod_selector":       schemaNetworkPeerSelector,
+				"namespace_selector": schemaNetworkPeerSelector,
+				"ip_block": {
 					Type:     schema.TypeList,
 					Optional: true,
 					Elem: &schema.Schema{
@@ -351,14 +361,14 @@ var (
 		MaxItems: 1,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
-				"matchlabels": {
+				"match_labels": {
 					Type:     schema.TypeMap,
 					Optional: true,
 					Elem: &schema.Schema{
 						Type: schema.TypeString,
 					},
 				},
-				"matchexpressions": schemaNetworkPeerSelectorExpression,
+				"match_expressions": schemaNetworkPeerSelectorExpression,
 			},
 		},
 	}
@@ -456,7 +466,7 @@ func resourcePoolCreate(ctx context.Context, d *schema.ResourceData, m interface
 	config.Resources.General.Setup.Provisioner = provisioner
 
 	c := m.(*client.Client)
-	err := c.CreatPoolConfig(config)
+	err := c.CreatePoolConfig(config)
 	if err != nil {
 		return diag.FromErr(err)
 	}

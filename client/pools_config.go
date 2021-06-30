@@ -67,12 +67,12 @@ type PoolSetup struct {
 }
 
 type PoolNetworkPolicy struct {
-	Ingress            *NetworkPolicy `json:"ingress,omitempty"`
-	Egress             *NetworkPolicy `json:"egress,omitempty"`
-	DisableAppPolicies bool           `json:"disableAppPolicies"`
+	Ingress            *NetworkPolicyConfig `json:"ingress,omitempty"`
+	Egress             *NetworkPolicyConfig `json:"egress,omitempty"`
+	DisableAppPolicies bool                 `json:"disableAppPolicies"`
 }
 
-type NetworkPolicy struct {
+type NetworkPolicyConfig struct {
 	PolicyMode        string               `json:"policy_mode,omitempty"`
 	CustomRules       []*NetworkPolicyRule `json:"custom_rules,omitempty"`
 	ShipaRules        []*NetworkPolicyRule `json:"shipa_rules,omitempty"`
@@ -80,34 +80,35 @@ type NetworkPolicy struct {
 }
 
 type NetworkPolicyRule struct {
-	ID          string         `json:"id,omitempty"`
-	Enabled     bool           `json:"enabled"`
-	Description string         `json:"description,omitempty"`
-	Ports       []*NetworkPort `json:"ports,omitempty"`
-	Peers       []*NetworkPeer `json:"peers,omitempty"`
-	AllowedApps []string       `json:"allowed_apps,omitempty"`
+	ID                string         `json:"id,omitempty"`
+	Enabled           bool           `json:"enabled"`
+	Description       string         `json:"description,omitempty"`
+	Ports             []*NetworkPort `json:"ports,omitempty"`
+	Peers             []*NetworkPeer `json:"peers,omitempty"`
+	AllowedApps       []string       `json:"allowed_apps,omitempty"`
+	AllowedFrameworks []string       `json:"allowed_pools,omitempty" terraform:"allowed_frameworks,omitempty"`
 }
 
 type NetworkPort struct {
-	Protocol string              `json:"protocol,omitempty"`
-	Port     *NetworkPortDetails `json:"port,omitempty"`
+	Protocol string `json:"protocol,omitempty"`
+	Port     int64    `json:"port,omitempty"`
 }
 
-type NetworkPortDetails struct {
-	Type   int    `json:"type"`
-	Intval int    `json:"intval"`
-	Strval string `json:"strval,omitempty"`
-}
+//type NetworkPortDetails struct {
+//	Type   int    `json:"type"`
+//	Intval int    `json:"intval"`
+//	Strval string `json:"strval,omitempty"`
+//}
 
 type NetworkPeer struct {
-	PodSelector       *NetworkPeerSelector `json:"podselector,omitempty"`
-	NamespaceSelector *NetworkPeerSelector `json:"namespaceselector,omitempty"`
-	IPBlock           []string             `json:"ipblock,omitempty"`
+	PodSelector       *NetworkPeerSelector `json:"podSelector,omitempty"`
+	NamespaceSelector *NetworkPeerSelector `json:"namespaceSelector,omitempty"`
+	IPBlock           []string             `json:"ipBlock,omitempty"`
 }
 
 type NetworkPeerSelector struct {
-	MatchLabels      map[string]string     `json:"matchlabels,omitempty"`
-	MatchExpressions []*SelectorExpression `json:"matchexpressions,omitempty"`
+	MatchLabels      map[string]string     `json:"matchLabels,omitempty"`
+	MatchExpressions []*SelectorExpression `json:"matchExpressions,omitempty"`
 }
 
 type SelectorExpression struct {
@@ -115,6 +116,7 @@ type SelectorExpression struct {
 	Operator string   `json:"operator,omitempty"`
 	Values   []string `json:"values,omitempty"`
 }
+
 
 func (c *Client) GetPoolConfig(name string) (*PoolConfig, error) {
 	poolConfig := &PoolConfig{}
@@ -126,7 +128,7 @@ func (c *Client) GetPoolConfig(name string) (*PoolConfig, error) {
 	return poolConfig, nil
 }
 
-func (c *Client) CreatPoolConfig(pool *PoolConfig) error {
+func (c *Client) CreatePoolConfig(pool *PoolConfig) error {
 	return c.post(pool, apiPoolsConfig)
 }
 

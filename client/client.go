@@ -26,6 +26,10 @@ const (
 	apiRoles       = "roles"
 )
 
+func apiAppNetworkPolicy(appName string) string {
+	return fmt.Sprintf("%s/%s/network-policy", apiApps, appName)
+}
+
 func apiAppEnvs(appName string) string {
 	return fmt.Sprintf("%s/%s/env", apiApps, appName)
 }

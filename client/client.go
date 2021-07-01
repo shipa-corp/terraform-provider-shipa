@@ -98,7 +98,7 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 }
 
 func (c *Client) get(out interface{}, urlPath ...string) error {
-	req, err := c.newRequest("GET", nil, urlPath...)
+	req, err := c.newRequest(http.MethodGet, nil, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func (c *Client) updateURLEncodedRequest(method string, params map[string]string
 }
 
 func (c *Client) post(payload interface{}, urlPath ...string) error {
-	body, statusCode, err := c.updateRequest("POST", payload, urlPath...)
+	body, statusCode, err := c.updateRequest(http.MethodPost, payload, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -238,7 +238,7 @@ func (c *Client) post(payload interface{}, urlPath ...string) error {
 }
 
 func (c *Client) postURLEncoded(params map[string]string, urlPath ...string) error {
-	body, statusCode, err := c.updateURLEncodedRequest("POST", params, urlPath...)
+	body, statusCode, err := c.updateURLEncodedRequest(http.MethodPost, params, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -250,7 +250,7 @@ func (c *Client) postURLEncoded(params map[string]string, urlPath ...string) err
 }
 
 func (c *Client) put(payload interface{}, urlPath ...string) error {
-	body, statusCode, err := c.updateRequest("PUT", payload, urlPath...)
+	body, statusCode, err := c.updateRequest(http.MethodPut, payload, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -262,7 +262,7 @@ func (c *Client) put(payload interface{}, urlPath ...string) error {
 }
 
 func (c *Client) delete(urlPath ...string) error {
-	req, err := c.newRequest("DELETE", nil, urlPath...)
+	req, err := c.newRequest(http.MethodDelete, nil, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -284,7 +284,7 @@ type QueryParam struct {
 }
 
 func (c *Client) deleteWithParams(params []*QueryParam, urlPath ...string) error {
-	req, err := c.newRequestWithParamsList("DELETE", nil, urlPath, params)
+	req, err := c.newRequestWithParamsList(http.MethodDelete, nil, urlPath, params)
 	if err != nil {
 		return err
 	}
@@ -301,7 +301,7 @@ func (c *Client) deleteWithParams(params []*QueryParam, urlPath ...string) error
 }
 
 func (c *Client) deleteWithPayload(payload interface{}, params map[string]string, urlPath ...string) error {
-	req, err := c.newRequestWithParams("DELETE", payload, urlPath, params)
+	req, err := c.newRequestWithParams(http.MethodDelete, payload, urlPath, params)
 	if err != nil {
 		return err
 	}

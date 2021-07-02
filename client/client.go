@@ -50,30 +50,58 @@ func apiRoleUser(role string) string {
 	return fmt.Sprintf("%s/%s/user", apiRoles, role)
 }
 
-
 type Client struct {
 	HostURL    string
 	HTTPClient *http.Client
 	Token      string
 }
 
-func NewClient(host, token string) (*Client, error) {
-	if host == "" {
-		return nil, errors.New("host can not be empty")
-	}
+type Option func(*Client) error
 
-	if token == "" {
-		return nil, errors.New("token can not be empty")
+func (c *Client) parseOptions(opts ...Option) error {
+	for _, option := range opts {
+		if err := option(c); err != nil {
+			return err
+		}
 	}
+	return nil
+}
 
+func WithHost(host string) Option {
+	return func(client *Client) error {
+		if host == "" {
+			return errors.New("host can not be empty")
+		}
+
+		client.HostURL = host
+		return nil
+	}
+}
+
+func WithToken(token string) Option {
+	return func(client *Client) error {
+		if token == "" {
+			return errors.New("token can not be empty")
+		}
+
+		client.Token = token
+		return nil
+	}
+}
+
+func WithClient(httpClient *http.Client) Option {
+	return func(client *Client) error {
+		client.HTTPClient = httpClient
+		return nil
+	}
+}
+
+func NewClient(options ...Option) (*Client, error) {
 	c := &Client{
-		HostURL:    host,
 		HTTPClient: &http.Client{Timeout: 500 * time.Second},
-		Token:      token,
 	}
 
-	err := c.testAuthentication()
-	if err != nil {
+	if err := c.parseOptions(options...); err != nil {
 		return nil, err
 	}
 
@@ -82,7 +110,7 @@ func NewClient(host, token string) (*Client, error) {
 
 func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer " + c.Token)
+	req.Header.Set("Authorization", "Bearer "+c.Token)
 
 	log.Printf("Headers: %+v\n", req.Header)
 

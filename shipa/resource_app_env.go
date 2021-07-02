@@ -2,8 +2,10 @@ package shipa
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/marcustreacy/go-terraform-provider/client"
 	"github.com/marcustreacy/go-terraform-provider/helper"
 )
@@ -156,7 +158,7 @@ func resourceAppEnvUpdate(ctx context.Context, d *schema.ResourceData, m interfa
 	}
 
 	// get diff (to delete)
-	envsToDelete := []*client.AppEnv{}
+	var envsToDelete []*client.AppEnv
 	for _, item := range filterPlatformEnvs(actualAppEnvs) {
 		if !newState[item.Name] {
 			envsToDelete = append(envsToDelete, item)
@@ -164,7 +166,7 @@ func resourceAppEnvUpdate(ctx context.Context, d *schema.ResourceData, m interfa
 	}
 
 	// delete envs
-	err = c.DeleteAppEnvs(app, &client.CreateAppEnv{
+	err = c.DeleteAppEnvs(app, &client.DeleteAppEnv{
 		Envs:      envsToDelete,
 		NoRestart: req.NoRestart,
 	})
@@ -187,7 +189,7 @@ func resourceAppEnvDelete(ctx context.Context, d *schema.ResourceData, m interfa
 
 	name := d.Id()
 	appEnvs := d.Get("app_env").([]interface{})[0].(map[string]interface{})
-	req := &client.CreateAppEnv{}
+	req := &client.DeleteAppEnv{}
 	helper.TerraformToStruct(appEnvs, req)
 	req.Envs = filterPlatformEnvs(req.Envs)
 

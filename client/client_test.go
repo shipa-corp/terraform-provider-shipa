@@ -1,52 +1,28 @@
 package client
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"testing"
+	"net/http"
+	"net/http/httptest"
+
+	"github.com/marcustreacy/go-terraform-provider/client/clientest"
 )
 
-func getClient() *Client {
-	c, err := NewClient(host, authToken)
+func setupServer(handlers ...clientest.Handler) (client *Client, teardown func()) {
+	mux := http.NewServeMux()
+	server := httptest.NewServer(mux)
+
+	c, err := NewClient(
+		WithHost(server.URL),
+		WithClient(server.Client()))
 	if err != nil {
 		panic(err)
 	}
-	return c
-}
 
-func TestGetPoolConfig(t *testing.T) {
-	c := getClient()
-
-	config, err := c.GetPoolConfig("cinema-services")
-	if err != nil {
-		t.Error(err.Error())
-		return
+	for _, h := range handlers {
+		mux.HandleFunc(h.GetEndpoint(), h.GetHandlerFunc())
 	}
 
-	printJSON(config)
-}
-
-func TestDeletePool(t *testing.T) {
-	c := getClient()
-
-	err := c.DeletePool("test-tf-14")
-	if err != nil {
-		t.Error(err.Error())
-		return
+	return c, func() {
+		server.Close()
 	}
-}
-
-func printJSON(payload interface{}) {
-	data, err := json.Marshal(payload)
-	if err != nil {
-		fmt.Println("ERR:", err.Error())
-		return
-	}
-	body := &bytes.Buffer{}
-	body.Write(data)
-
-	var prettyJSON bytes.Buffer
-	json.Indent(&prettyJSON, data, "", "  ")
-	fmt.Println(string(prettyJSON.Bytes()))
 }

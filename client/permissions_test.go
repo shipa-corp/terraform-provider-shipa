@@ -22,7 +22,7 @@ func TestClient_CreatePermission(t *testing.T) {
 	payload := &Permission{Role: "role"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/roles", clientest.ComparablePayload{
+		clientest.CheckPayloadHandler("/roles/role/permissions", clientest.ComparablePayload{
 			Want: payload,
 			Got:  payload,
 		}, http.MethodPost),

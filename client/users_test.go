@@ -9,7 +9,7 @@ import (
 
 func TestClient_GetUser(t *testing.T) {
 	client, teardown := setupServer(
-		clientest.PrintJsonHandler("/users/user", []User{{Email: "user@shipa.io"}}, http.MethodGet),
+		clientest.PrintJsonHandler("/users/user@shipa.io", []User{{Email: "user@shipa.io"}}, http.MethodGet),
 	)
 	defer teardown()
 

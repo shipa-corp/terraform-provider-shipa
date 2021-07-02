@@ -2,9 +2,10 @@ package helper
 
 import (
 	"encoding/json"
-	"github.com/shipa-corp/terraform-provider-shipa/client"
 	"log"
 	"testing"
+
+	"github.com/shipa-corp/terraform-provider-shipa/client"
 )
 
 func TestNestedStruct(t *testing.T) {

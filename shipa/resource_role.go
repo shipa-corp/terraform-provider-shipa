@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/marcustreacy/go-terraform-provider/client"
+	"github.com/shipa-corp/terraform-provider-shipa/client"
 )
 
 func resourceRole() *schema.Resource {

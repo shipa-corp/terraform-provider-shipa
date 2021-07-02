@@ -1,4 +1,4 @@
-module github.com/marcustreacy/go-terraform-provider
+module github.com/shipa-corp/terraform-provider-shipa
 
 go 1.16
 

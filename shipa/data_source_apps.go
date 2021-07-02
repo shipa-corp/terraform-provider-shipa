@@ -2,10 +2,11 @@ package shipa
 
 import (
 	"context"
-	"github.com/marcustreacy/go-terraform-provider/client"
-	"github.com/marcustreacy/go-terraform-provider/helper"
 	"strconv"
 	"time"
+
+	"github.com/shipa-corp/terraform-provider-shipa/client"
+	"github.com/shipa-corp/terraform-provider-shipa/helper"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"

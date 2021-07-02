@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/marcustreacy/go-terraform-provider/client/clientest"
-	"github.com/marcustreacy/go-terraform-provider/helper"
+	"github.com/shipa-corp/terraform-provider-shipa/client/clientest"
+	"github.com/shipa-corp/terraform-provider-shipa/helper"
 )
 
 func TestClient_GetApp(t *testing.T) {

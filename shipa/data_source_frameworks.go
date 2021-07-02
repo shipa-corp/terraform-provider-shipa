@@ -2,8 +2,8 @@ package shipa
 
 import (
 	"context"
-	"github.com/marcustreacy/go-terraform-provider/client"
-	"github.com/marcustreacy/go-terraform-provider/helper"
+	"github.com/shipa-corp/terraform-provider-shipa/client"
+	"github.com/shipa-corp/terraform-provider-shipa/helper"
 	"strconv"
 	"time"
 

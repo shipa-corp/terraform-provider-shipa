@@ -171,7 +171,6 @@ func (c *Client) newRequest(method string, payload interface{}, urlPath ...strin
 
 		log.Printf("Payload: %s\n", string(data))
 	}
-
 	return http.NewRequest(method, URL, body)
 }
 
@@ -294,7 +293,6 @@ func (c *Client) delete(urlPath ...string) error {
 	if err != nil {
 		return err
 	}
-
 	body, statusCode, err := c.doRequest(req)
 	if err != nil {
 		return err

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/marcustreacy/go-terraform-provider/client/clientest"
+	"github.com/shipa-corp/terraform-provider-shipa/client/clientest"
 )
 
 func setupServer(handlers ...clientest.Handler) (client *Client, teardown func()) {

@@ -2,7 +2,7 @@ package helper
 
 import (
 	"encoding/json"
-	"github.com/marcustreacy/go-terraform-provider/client"
+	"github.com/shipa-corp/terraform-provider-shipa/client"
 	"log"
 	"testing"
 )

@@ -22,10 +22,7 @@ func TestClient_CreateTeam(t *testing.T) {
 	payload := &Team{Name: "team"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/teams", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/teams", payload, http.MethodPost),
 	)
 	defer teardown()
 

@@ -33,10 +33,7 @@ func TestClient_CreateUser(t *testing.T) {
 	payload := &User{Email: "user@shipa.io"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/users", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/users", payload, http.MethodPost),
 	)
 	defer teardown()
 

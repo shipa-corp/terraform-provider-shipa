@@ -21,10 +21,7 @@ func TestClient_GetNetworkPolicy(t *testing.T) {
 func TestClient_CreateOrUpdateNetworkPolicy(t *testing.T) {
 	payload := &NetworkPolicy{}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppNetworkPolicy("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPut),
+		clientest.CheckPayloadHandler("/"+apiAppNetworkPolicy("app"), payload, http.MethodPut),
 	)
 	defer teardown()
 

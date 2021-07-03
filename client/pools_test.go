@@ -33,10 +33,7 @@ func TestClient_CreatePool(t *testing.T) {
 	payload := &CreatePoolRequest{Name: "pool"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/pools", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/pools", payload, http.MethodPost),
 	)
 	defer teardown()
 

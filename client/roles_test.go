@@ -22,10 +22,7 @@ func TestClient_CreateRole(t *testing.T) {
 	payload := &Role{Name: "role"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/roles", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/roles", payload, http.MethodPost),
 	)
 	defer teardown()
 
@@ -46,12 +43,9 @@ func TestClient_DeleteRole(t *testing.T) {
 }
 
 func TestClient_AssociateRoleToUser(t *testing.T) {
-	payload := Email{Email: "shipa.io"}
+	payload := Email{Email: "user@shipa.io"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiRoleUser("role"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/"+apiRoleUser("role"), payload, http.MethodPost),
 	)
 	defer teardown()
 
@@ -63,10 +57,7 @@ func TestClient_AssociateRoleToUser(t *testing.T) {
 func TestClient_DisassociateRoleFromUser(t *testing.T) {
 	payload := Email{Email: "shipa.io"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiRoleUser("role")+"/user@shipa.io", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodDelete),
+		clientest.CheckPayloadHandler("/"+apiRoleUser("role")+"/user@shipa.io", payload, http.MethodDelete),
 	)
 	defer teardown()
 

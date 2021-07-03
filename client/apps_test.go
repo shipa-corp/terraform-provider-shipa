@@ -36,10 +36,7 @@ func TestClient_CreateApp(t *testing.T) {
 	payload := &App{Name: "app", Pool: "some-pool"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/apps", payload, http.MethodPost),
 	)
 	defer teardown()
 
@@ -51,10 +48,7 @@ func TestClient_CreateApp(t *testing.T) {
 func TestClient_UpdateApp(t *testing.T) {
 	payload := &UpdateAppRequest{Plan: "new-plan"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps/app", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPut),
+		clientest.CheckPayloadHandler("/apps/app", payload, http.MethodPut),
 	)
 	defer teardown()
 
@@ -77,10 +71,7 @@ func TestClient_DeleteApp(t *testing.T) {
 func TestClient_DeployApp(t *testing.T) {
 	payload := &AppDeploy{Image: "dockerhub-image"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps/app/", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/apps/app/", map[string][]string{"image": {"dockerhub-image"}}, http.MethodPost),
 	)
 	defer teardown()
 
@@ -92,10 +83,7 @@ func TestClient_DeployApp(t *testing.T) {
 func TestClient_CreateAppCname(t *testing.T) {
 	payload := &AppCname{Cname: "shipa.io"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppCname("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/"+apiAppCname("app"), payload, http.MethodPost),
 	)
 	defer teardown()
 
@@ -107,10 +95,7 @@ func TestClient_CreateAppCname(t *testing.T) {
 func TestClient_UpdateAppCname(t *testing.T) {
 	payload := &AppCname{Cname: "shipa.io"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppCname("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPut),
+		clientest.CheckPayloadHandler("/"+apiAppCname("app"), payload, http.MethodPut),
 	)
 	defer teardown()
 
@@ -122,10 +107,7 @@ func TestClient_UpdateAppCname(t *testing.T) {
 func TestClient_DeleteAppCname(t *testing.T) {
 	payload := &AppCname{Cname: "shipa.io"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppCname("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodDelete),
+		clientest.CheckPayloadHandler("/"+apiAppCname("app"), payload, http.MethodDelete),
 	)
 	defer teardown()
 
@@ -135,12 +117,9 @@ func TestClient_DeleteAppCname(t *testing.T) {
 }
 
 func TestClient_CreateAppEnvs(t *testing.T) {
-	payload := &CreateAppEnv{}
+	payload := &CreateAppEnv{NoRestart: true}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppEnvs("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/"+apiAppEnvs("app"), payload, http.MethodPost),
 	)
 	defer teardown()
 
@@ -152,10 +131,7 @@ func TestClient_CreateAppEnvs(t *testing.T) {
 func TestClient_DeleteAppEnvs(t *testing.T) {
 	payload := &DeleteAppEnv{}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/"+apiAppEnvs("app"), clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodDelete),
+		clientest.CheckPayloadHandler("/"+apiAppEnvs("app"), payload, http.MethodDelete),
 	)
 	defer teardown()
 

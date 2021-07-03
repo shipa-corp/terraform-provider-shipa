@@ -22,10 +22,7 @@ func TestClient_UpdateCluster(t *testing.T) {
 	payload := &CreateClusterRequest{Name: "cluster", Endpoint: &ClusterEndpointCreate{Addresses: []string{"addr"}}}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/provisioner/clusters/cluster", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPut),
+		clientest.CheckPayloadHandler("/provisioner/clusters/cluster", payload, http.MethodPut),
 	)
 	defer teardown()
 
@@ -64,10 +61,7 @@ func TestClient_CreateCluster(t *testing.T) {
 	}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/provisioner/clusters", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/provisioner/clusters", payload, http.MethodPost),
 	)
 	defer teardown()
 

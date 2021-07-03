@@ -112,8 +112,6 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.Token)
 
-	log.Printf("Headers: %+v\n", req.Header)
-
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return nil, 0, err

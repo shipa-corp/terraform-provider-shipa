@@ -33,10 +33,7 @@ func TestClient_CreatePlan(t *testing.T) {
 	payload := &Plan{Name: "plan"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/plans", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/plans", payload, http.MethodPost),
 	)
 	defer teardown()
 

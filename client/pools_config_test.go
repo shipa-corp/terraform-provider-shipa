@@ -22,10 +22,7 @@ func TestClient_UpdatePoolConfig(t *testing.T) {
 	payload := &PoolConfig{Name: "pool"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/pools-config", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPut),
+		clientest.CheckPayloadHandler("/pools-config", payload, http.MethodPut),
 	)
 	defer teardown()
 
@@ -38,10 +35,7 @@ func TestClient_CreatePoolConfig(t *testing.T) {
 	payload := &PoolConfig{Name: "pool"}
 
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/pools-config", clientest.ComparablePayload{
-			Want: payload,
-			Got:  payload,
-		}, http.MethodPost),
+		clientest.CheckPayloadHandler("/pools-config", payload, http.MethodPost),
 	)
 	defer teardown()
 

@@ -152,7 +152,6 @@ type CreateAppEnv struct {
 type DeleteAppEnv struct {
 	Envs      []*AppEnv `json:"envs"`
 	NoRestart bool      `json:"norestart"`
-	Private   bool      `json:"private"`
 }
 
 func (c *Client) CreateAppEnvs(appName string, req *CreateAppEnv) error {

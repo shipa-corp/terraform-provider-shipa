@@ -23,7 +23,7 @@ data "shipa_framework" "tf" {
   id = shipa_framework.tf.framework[0].name
 }
 
-output "my_val" {
+output "fw" {
   value = data.shipa_framework.tf
 }
 
@@ -67,10 +67,11 @@ resource "shipa_cluster" "tf" {
   cluster {
     name = "cl-1"
     endpoint {
-      addresses = ["https://E873062014D66818F6B1E5E19AD27DF0.gr7.us-west-1.eks.amazonaws.com"]
-      ca_cert = file("path/to/cluster/ca-cert")
-      token = "cluster-token-value" //FIXME: file("path/to/cluster/ca-cert") has a bug
+      addresses = [var.cluster_address]
+      ca_cert = file(var.cluster_ca_path)
+      token = var.cluster_token
     }
+
     resources {
       frameworks {
         name = [
@@ -135,6 +136,7 @@ resource "shipa_app_env" "tf" {
     norestart = true
     private = false
   }
+  depends_on = [shipa_app_deploy.tf]
 }
 
 # Set app cname
@@ -162,12 +164,12 @@ resource "shipa_role" "role1" {
 
 # Create role permission
 resource "shipa_permission" "p1" {
-  name = "RoleName"
+  name = shipa_role.role1.name
   permission = ["app.read",  "app.deploy"]
 }
 
 # Create role association
 resource "shipa_role_association" "r1" {
-  name = "RoleName"
+  name = shipa_role.role1.name
   email = shipa_user.tf.email
 }

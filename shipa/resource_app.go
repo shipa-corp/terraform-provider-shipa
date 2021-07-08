@@ -60,13 +60,6 @@ var (
 
 				"units": unitsSchema,
 
-				"cname": {
-					Type:     schema.TypeList,
-					Computed: true,
-					Elem: &schema.Schema{
-						Type: schema.TypeString,
-					},
-				},
 				"ip": {
 					Type:     schema.TypeString,
 					Computed: true,

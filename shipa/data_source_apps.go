@@ -147,7 +147,7 @@ var (
 	}
 
 	planSchema = &schema.Schema{
-		Type:     schema.TypeMap,
+		Type:     schema.TypeList,
 		Computed: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
@@ -189,7 +189,7 @@ var (
 	}
 
 	lockSchema = &schema.Schema{
-		Type:     schema.TypeMap,
+		Type:     schema.TypeList,
 		Computed: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{

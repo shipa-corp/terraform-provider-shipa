@@ -44,7 +44,7 @@ func TestClient_CreateUser(t *testing.T) {
 
 func TestClient_DeleteUser(t *testing.T) {
 	client, teardown := setupServer(
-		clientest.CheckMethodHandler("/users/user", http.MethodDelete),
+		clientest.CheckMethodHandler("/users", http.MethodDelete),
 	)
 	defer teardown()
 

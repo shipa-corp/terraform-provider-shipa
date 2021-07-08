@@ -7,7 +7,6 @@ type User struct {
 	Password string `json:"password"`
 }
 
-
 func (c *Client) GetUser(email string) (*User, error) {
 	users, err := c.ListUsers()
 	if err != nil {
@@ -38,11 +37,6 @@ func (c *Client) CreateUser(req *User) error {
 }
 
 func (c *Client) DeleteUser(email string) error {
-	// TODO: uncomment after delete user will be fixed
-	return nil
-
-	//params := map[string]string{
-	//	"email": email,
-	//}
-	//return c.deleteWithParams(params, apiUsers)
+	params := []*QueryParam{{Key: "email", Val: email}}
+	return c.deleteWithParams(params, apiUsers)
 }

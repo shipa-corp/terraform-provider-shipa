@@ -2,10 +2,15 @@ package shipa
 
 import (
 	"context"
+	"fmt"
+	"time"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/marcustreacy/go-terraform-provider/client"
-	"github.com/marcustreacy/go-terraform-provider/helper"
+
+	"github.com/shipa-corp/terraform-provider-shipa/client"
+	"github.com/shipa-corp/terraform-provider-shipa/helper"
 )
 
 var (
@@ -27,13 +32,13 @@ var (
 					Optional: true,
 				},
 				"registry_user": {
-					Type:     schema.TypeString,
-					Optional: true,
+					Type:         schema.TypeString,
+					Optional:     true,
 					RequiredWith: []string{"deploy.0.private_image"},
 				},
 				"registry_secret": {
-					Type:     schema.TypeString,
-					Optional: true,
+					Type:         schema.TypeString,
+					Optional:     true,
 					RequiredWith: []string{"deploy.0.private_image"},
 				},
 				"steps": {
@@ -78,7 +83,6 @@ func resourceAppDeploy() *schema.Resource {
 			},
 			"deploy": schemaAppDeploy,
 		},
-
 	}
 }
 
@@ -92,7 +96,22 @@ func resourceAppDeployCreate(ctx context.Context, d *schema.ResourceData, m inte
 	helper.TerraformToStruct(deploy, req)
 
 	c := m.(*client.Client)
-	err := c.DeployApp(app, req)
+
+	retries := 0
+	err := resource.RetryContext(ctx, time.Minute*1, func() *resource.RetryError {
+		err := c.DeployApp(app, req)
+		if err != nil {
+			if retries == 3 {
+				return resource.NonRetryableError(fmt.Errorf("failed to deploy app after 3 tries, %v", err))
+			}
+			time.Sleep(time.Minute)
+			retries++
+			return resource.RetryableError(err)
+		}
+
+		return nil
+	})
+
 	if err != nil {
 		return diag.FromErr(err)
 	}

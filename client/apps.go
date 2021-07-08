@@ -148,6 +148,12 @@ type CreateAppEnv struct {
 	Private   bool      `json:"private"`
 }
 
+
+type DeleteAppEnv struct {
+	Envs      []*AppEnv `json:"envs"`
+	NoRestart bool      `json:"norestart"`
+}
+
 func (c *Client) CreateAppEnvs(appName string, req *CreateAppEnv) error {
 	return c.post(req, apiAppEnvs(appName))
 }
@@ -162,7 +168,7 @@ func (c *Client) GetAppEnvs(appName string) ([]*AppEnv, error) {
 	return envs, nil
 }
 
-func (c *Client) DeleteAppEnvs(appName string, req *CreateAppEnv) error {
+func (c *Client) DeleteAppEnvs(appName string, req *DeleteAppEnv) error {
 	params := []*QueryParam{
 		{Key: "norestart", Val: req.NoRestart},
 	}
@@ -178,8 +184,8 @@ func (c *Client) DeleteAppEnvs(appName string, req *CreateAppEnv) error {
 }
 
 type AppCname struct {
-	Cname   string `json:"cname"`
-	Scheme  string  `json:"scheme"`
+	Cname  string `json:"cname"`
+	Scheme string `json:"scheme"`
 }
 
 func (c *Client) CreateAppCname(appName string, req *AppCname) error {
@@ -208,6 +214,10 @@ type AppDeploy struct {
 }
 
 func (c *Client) DeployApp(appName string, req *AppDeploy) error {
+	return c.postURLEncoded(getAppDeployParams(req), apiAppDeploy(appName))
+}
+
+func getAppDeployParams(req *AppDeploy) map[string]string {
 	params := map[string]string{
 		"image": req.Image,
 	}
@@ -235,5 +245,5 @@ func (c *Client) DeployApp(appName string, req *AppDeploy) error {
 		params["message"] = req.Message
 	}
 
-	return c.postURLEncoded(params, apiAppDeploy(appName))
+	return params
 }

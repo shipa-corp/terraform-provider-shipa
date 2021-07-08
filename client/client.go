@@ -50,30 +50,58 @@ func apiRoleUser(role string) string {
 	return fmt.Sprintf("%s/%s/user", apiRoles, role)
 }
 
-
 type Client struct {
 	HostURL    string
 	HTTPClient *http.Client
 	Token      string
 }
 
-func NewClient(host, token string) (*Client, error) {
-	if host == "" {
-		return nil, errors.New("host can not be empty")
-	}
+type Option func(*Client) error
 
-	if token == "" {
-		return nil, errors.New("token can not be empty")
+func (c *Client) parseOptions(opts ...Option) error {
+	for _, option := range opts {
+		if err := option(c); err != nil {
+			return err
+		}
 	}
+	return nil
+}
 
+func WithHost(host string) Option {
+	return func(client *Client) error {
+		if host == "" {
+			return errors.New("host can not be empty")
+		}
+
+		client.HostURL = host
+		return nil
+	}
+}
+
+func WithToken(token string) Option {
+	return func(client *Client) error {
+		if token == "" {
+			return errors.New("token can not be empty")
+		}
+
+		client.Token = token
+		return nil
+	}
+}
+
+func WithClient(httpClient *http.Client) Option {
+	return func(client *Client) error {
+		client.HTTPClient = httpClient
+		return nil
+	}
+}
+
+func NewClient(options ...Option) (*Client, error) {
 	c := &Client{
-		HostURL:    host,
 		HTTPClient: &http.Client{Timeout: 500 * time.Second},
-		Token:      token,
 	}
 
-	err := c.testAuthentication()
-	if err != nil {
+	if err := c.parseOptions(options...); err != nil {
 		return nil, err
 	}
 
@@ -82,9 +110,7 @@ func NewClient(host, token string) (*Client, error) {
 
 func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer " + c.Token)
-
-	log.Printf("Headers: %+v\n", req.Header)
+	req.Header.Set("Authorization", "Bearer "+c.Token)
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
@@ -98,7 +124,7 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 }
 
 func (c *Client) get(out interface{}, urlPath ...string) error {
-	req, err := c.newRequest("GET", nil, urlPath...)
+	req, err := c.newRequest(http.MethodGet, nil, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -143,7 +169,6 @@ func (c *Client) newRequest(method string, payload interface{}, urlPath ...strin
 
 		log.Printf("Payload: %s\n", string(data))
 	}
-
 	return http.NewRequest(method, URL, body)
 }
 
@@ -226,7 +251,7 @@ func (c *Client) updateURLEncodedRequest(method string, params map[string]string
 }
 
 func (c *Client) post(payload interface{}, urlPath ...string) error {
-	body, statusCode, err := c.updateRequest("POST", payload, urlPath...)
+	body, statusCode, err := c.updateRequest(http.MethodPost, payload, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -238,7 +263,7 @@ func (c *Client) post(payload interface{}, urlPath ...string) error {
 }
 
 func (c *Client) postURLEncoded(params map[string]string, urlPath ...string) error {
-	body, statusCode, err := c.updateURLEncodedRequest("POST", params, urlPath...)
+	body, statusCode, err := c.updateURLEncodedRequest(http.MethodPost, params, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -250,7 +275,7 @@ func (c *Client) postURLEncoded(params map[string]string, urlPath ...string) err
 }
 
 func (c *Client) put(payload interface{}, urlPath ...string) error {
-	body, statusCode, err := c.updateRequest("PUT", payload, urlPath...)
+	body, statusCode, err := c.updateRequest(http.MethodPut, payload, urlPath...)
 	if err != nil {
 		return err
 	}
@@ -262,11 +287,10 @@ func (c *Client) put(payload interface{}, urlPath ...string) error {
 }
 
 func (c *Client) delete(urlPath ...string) error {
-	req, err := c.newRequest("DELETE", nil, urlPath...)
+	req, err := c.newRequest(http.MethodDelete, nil, urlPath...)
 	if err != nil {
 		return err
 	}
-
 	body, statusCode, err := c.doRequest(req)
 	if err != nil {
 		return err
@@ -284,7 +308,7 @@ type QueryParam struct {
 }
 
 func (c *Client) deleteWithParams(params []*QueryParam, urlPath ...string) error {
-	req, err := c.newRequestWithParamsList("DELETE", nil, urlPath, params)
+	req, err := c.newRequestWithParamsList(http.MethodDelete, nil, urlPath, params)
 	if err != nil {
 		return err
 	}
@@ -301,7 +325,7 @@ func (c *Client) deleteWithParams(params []*QueryParam, urlPath ...string) error
 }
 
 func (c *Client) deleteWithPayload(payload interface{}, params map[string]string, urlPath ...string) error {
-	req, err := c.newRequestWithParams("DELETE", payload, urlPath, params)
+	req, err := c.newRequestWithParams(http.MethodDelete, payload, urlPath, params)
 	if err != nil {
 		return err
 	}

@@ -2,9 +2,11 @@ package shipa
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/marcustreacy/go-terraform-provider/client"
+
+	"github.com/shipa-corp/terraform-provider-shipa/client"
 )
 
 func Provider() *schema.Provider {
@@ -56,7 +58,10 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	c, err := client.NewClient(host, token)
+	c, err := client.NewClient(
+		client.WithHost(host),
+		client.WithToken(token))
+
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,

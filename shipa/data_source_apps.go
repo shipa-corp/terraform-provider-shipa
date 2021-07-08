@@ -147,7 +147,7 @@ var (
 	}
 
 	planSchema = &schema.Schema{
-		Type:     schema.TypeList,
+		Type:     schema.TypeMap,
 		Computed: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
@@ -189,7 +189,7 @@ var (
 	}
 
 	lockSchema = &schema.Schema{
-		Type:     schema.TypeList,
+		Type:     schema.TypeMap,
 		Computed: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
@@ -289,11 +289,6 @@ var (
 
 		"units": unitsSchema,
 
-		"cname": {
-			Type:     schema.TypeList,
-			Computed: true,
-			Elem:     schema.TypeString,
-		},
 		"ip": {
 			Type:     schema.TypeString,
 			Computed: true,

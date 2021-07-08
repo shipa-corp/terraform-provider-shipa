@@ -81,7 +81,7 @@ var (
 	}
 
 	allowedSchema = &schema.Schema{
-		Type:     schema.TypeList,
+		Type:     schema.TypeMap,
 		Computed: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{

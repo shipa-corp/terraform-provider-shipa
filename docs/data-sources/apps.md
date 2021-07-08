@@ -28,16 +28,15 @@ description: |-
 
 Read-Only:
 
-- **cname** (List of String)
 - **description** (String)
 - **entrypoints** (List of Object) (see [below for nested schema](#nestedobjatt--apps--entrypoints))
 - **error** (String)
 - **framework** (String)
 - **ip** (String)
-- **lock** (List of Object) (see [below for nested schema](#nestedobjatt--apps--lock))
+- **lock** (Map of String)
 - **name** (String)
 - **org** (String)
-- **plan** (List of Object) (see [below for nested schema](#nestedobjatt--apps--plan))
+- **plan** (Map of String)
 - **platform** (String)
 - **routers** (List of Object) (see [below for nested schema](#nestedobjatt--apps--routers))
 - **status** (String)
@@ -52,32 +51,6 @@ Read-Only:
 
 - **cname** (String)
 - **scheme** (String)
-
-
-<a id="nestedobjatt--apps--lock"></a>
-### Nested Schema for `apps.lock`
-
-Read-Only:
-
-- **acquire_date** (String)
-- **locked** (Boolean)
-- **owner** (String)
-- **reason** (String)
-
-
-<a id="nestedobjatt--apps--plan"></a>
-### Nested Schema for `apps.plan`
-
-Read-Only:
-
-- **cpushare** (Number)
-- **default** (Boolean)
-- **memory** (Number)
-- **name** (String)
-- **org** (String)
-- **public** (Boolean)
-- **swap** (Number)
-- **teams** (List of String)
 
 
 <a id="nestedobjatt--apps--routers"></a>

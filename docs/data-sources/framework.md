@@ -28,20 +28,11 @@ description: |-
 
 Read-Only:
 
-- **allowed** (List of Object) (see [below for nested schema](#nestedobjatt--framework--allowed))
+- **allowed** (Map of String)
 - **default** (Boolean)
 - **name** (String)
 - **provisioner** (String)
 - **public** (Boolean)
 - **teams** (List of String)
-
-<a id="nestedobjatt--framework--allowed"></a>
-### Nested Schema for `framework.allowed`
-
-Read-Only:
-
-- **driver** (List of String)
-- **plan** (List of String)
-- **team** (List of String)
 
 

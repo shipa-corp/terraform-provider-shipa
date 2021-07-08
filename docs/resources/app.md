@@ -44,9 +44,9 @@ Read-Only:
 - **entrypoints** (List of Object) (see [below for nested schema](#nestedatt--app--entrypoints))
 - **error** (String)
 - **ip** (String)
-- **lock** (List of Object) (see [below for nested schema](#nestedatt--app--lock))
+- **lock** (Map of String)
 - **org** (String)
-- **plan** (List of Object) (see [below for nested schema](#nestedatt--app--plan))
+- **plan** (Map of String)
 - **routers** (List of Object) (see [below for nested schema](#nestedatt--app--routers))
 - **status** (String)
 - **units** (List of Object) (see [below for nested schema](#nestedatt--app--units))
@@ -58,32 +58,6 @@ Read-Only:
 
 - **cname** (String)
 - **scheme** (String)
-
-
-<a id="nestedatt--app--lock"></a>
-### Nested Schema for `app.lock`
-
-Read-Only:
-
-- **acquire_date** (String)
-- **locked** (Boolean)
-- **owner** (String)
-- **reason** (String)
-
-
-<a id="nestedatt--app--plan"></a>
-### Nested Schema for `app.plan`
-
-Read-Only:
-
-- **cpushare** (Number)
-- **default** (Boolean)
-- **memory** (Number)
-- **name** (String)
-- **org** (String)
-- **public** (Boolean)
-- **swap** (Number)
-- **teams** (List of String)
 
 
 <a id="nestedatt--app--routers"></a>

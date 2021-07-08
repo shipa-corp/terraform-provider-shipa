@@ -1,7 +1,5 @@
 archives:
-  - files:
-      - none*
-    format: zip
+  - format: zip
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
 before:
   hooks:
@@ -34,7 +32,6 @@ checksum:
 env:
   - CGO_ENABLED=0
 release:
-  disable: true
 signs:
   - artifacts: checksum
     args:

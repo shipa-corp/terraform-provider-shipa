@@ -5,3 +5,4 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+var.tfvars

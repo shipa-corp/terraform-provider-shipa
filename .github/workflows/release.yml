@@ -19,8 +19,8 @@ jobs:
         id: import_gpg
         uses: paultyng/ghaction-import-gpg@v2.1.0
         env:
-          TF_PROVIDER_GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          TF_PROVIDER_GPG_KEY_PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          GPG_PRIVATE_KEY: ${{ secrets.TF_PROVIDER_GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.TF_PROVIDER_GPG_KEY_PASSPHRASE }}
       - name: Set the user terminal
         run: export GPG_TTY=$(tty)
       - name: Run GoReleaser
@@ -30,4 +30,4 @@ jobs:
           args: release --rm-dist
         env:
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
-          GITHUB_TOKEN: ${{ secrets.SHIPA_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TF_PROVIDER_GH_TOKEN }}

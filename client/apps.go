@@ -34,7 +34,6 @@ type App struct {
 	TeamOwner   string        `json:"teamowner,omitempty"`
 	Plan        *Plan         `json:"plan,omitempty"`
 	Units       []*Unit       `json:"units,omitempty"`
-	Cname       []string      `json:"cname,omitempty"`
 	IP          string        `json:"ip,omitempty"`
 	Org         string        `json:"org,omitempty"`
 	Entrypoints []*Entrypoint `json:"entrypoints,omitempty"`

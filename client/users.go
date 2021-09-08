@@ -1,6 +1,8 @@
 package client
 
-import "errors"
+import (
+	"errors"
+)
 
 type User struct {
 	Email    string `json:"email"`
@@ -37,6 +39,6 @@ func (c *Client) CreateUser(req *User) error {
 }
 
 func (c *Client) DeleteUser(email string) error {
-	params := []*QueryParam{{Key: "email", Val: email}}
+	params := []*QueryParam{{Key: "user", Val: email}}
 	return c.deleteWithParams(params, apiUsers)
 }

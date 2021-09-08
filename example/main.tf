@@ -1,13 +1,16 @@
 terraform {
   required_providers {
     shipa = {
-      version = "0.0.1"
+      version = "0.0.2"
       source = "shipa.io/terraform/shipa"
     }
   }
 }
 
-provider "shipa" {}
+provider "shipa" {
+  host = var.shipa_host
+  token = var.shipa_token
+}
 
 # Returns specific app
 data "shipa_app" "app" {

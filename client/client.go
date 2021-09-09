@@ -214,7 +214,6 @@ func (c *Client) newRequestWithParamsList(method string, payload interface{}, ur
 	if paramsStr != "" {
 		URL = fmt.Sprintf("%s?%s", URL, paramsStr)
 	}
-
 	log.Printf("> %s: %s\n", method, URL)
 
 	if payload != nil {

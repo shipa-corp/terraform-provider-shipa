@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     shipa = {
-      version = "0.0.2"
-      source = "shipa.io/terraform/shipa"
+      version = "0.0.3"
+      source = "shipa-corp/shipa"
     }
   }
 }

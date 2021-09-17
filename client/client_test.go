@@ -11,12 +11,6 @@ import (
 	"github.com/shipa-corp/terraform-provider-shipa/client/clientest"
 )
 
-type AuthRequest struct {
-	Name      string                  `json:"password"`
-	Endpoint  *ClusterEndpointCreate  `json:"endpoint"`
-	Resources *ClusterResourcesCreate `json:"resources,omitempty"`
-}
-
 type RoundTripFunc func(req *http.Request) *http.Response
 
 func (f RoundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -37,7 +31,7 @@ func setupServer(handlers ...clientest.Handler) (client *Client, teardown func()
 	c, err := NewClient(
 		WithHost(server.URL),
 		WithClient(server.Client()),
-		WithToken("faketoken"))
+		WithAuth("faketoken", "", ""))
 	if err != nil {
 		panic(err)
 	}
@@ -61,25 +55,9 @@ func TestClient_WithHostEmptyHost(t *testing.T) {
 
 func TestClient_WithTokenEmptyToken(t *testing.T) {
 	_, err := NewClient(
-		WithToken(""))
+		WithAuth("", "", ""))
 	if err == nil {
-		t.Error("Passing empty token should return an error")
-	}
-}
-
-func TestClient_WithTokenEmptyAdminEmail(t *testing.T) {
-	_, err := NewClient(
-		WithAdminAuth("", "abc123"))
-	if err == nil {
-		t.Error("Passing empty admin email should return an error")
-	}
-}
-
-func TestClient_WithTokenEmptyAdminPassword(t *testing.T) {
-	_, err := NewClient(
-		WithAdminAuth("noone@nowhere.com", ""))
-	if err == nil {
-		t.Error("Passing empty admin password should return an error")
+		t.Error("Passing empty token, email, and password should return an error")
 	}
 }
 
@@ -101,7 +79,7 @@ func TestClient_WithAdminAuthAuthenticate(t *testing.T) {
 	client, _ := NewClient(
 		WithHost("https://target.shipa.mock:8081"),
 		WithClient(mockServer),
-		WithAdminAuth("admin@shipa.io", "abc123"))
+		WithAuth("", "admin@shipa.io", "abc123"))
 
 	client.authenticate()
 	if client.Token != "abcdef1234567890" {

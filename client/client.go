@@ -50,6 +50,10 @@ func apiRoleUser(role string) string {
 	return fmt.Sprintf("%s/%s/user", apiRoles, role)
 }
 
+func apiLogin(host string, user string) string {
+    return fmt.Sprintf("%s/%s/%s/tokens", host, apiUsers, user)
+}
+
 type Client struct {
 	HostURL       string
 	HTTPClient    *http.Client
@@ -80,25 +84,15 @@ func WithHost(host string) Option {
 	}
 }
 
-func WithAdminAuth(adminEmail string, adminPassword string) Option {
+func WithAuth(token string, adminEmail string, adminPassword string) Option {
 	return func(client *Client) error {
-		if adminEmail == "" || adminPassword == "" {
-			return errors.New("admin_email and admin_password can not be empty")
-		}
-
-		client.AdminEmail = adminEmail
-		client.AdminPassword = adminPassword
-		return nil
-	}
-}
-
-func WithToken(token string) Option {
-	return func(client *Client) error {
-		if token == "" {
-			return errors.New("token can not be empty")
+		if (adminEmail == "" || adminPassword == "") && token == "" {
+			return errors.New("either token or admin_email and admin_password must not be empty")
 		}
 
 		client.Token = token
+		client.AdminEmail = adminEmail
+		client.AdminPassword = adminPassword
 		return nil
 	}
 }
@@ -144,23 +138,34 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 }
 
 func (c *Client) authenticate() error {
-	mapping, encodedData := map[string]string{"password": c.AdminPassword}, new(bytes.Buffer)
-	json.NewEncoder(encodedData).Encode(mapping)
+	if c.AdminEmail == "" || c.AdminPassword == "" {
+		return errors.New("admin_email and admin_password can not be empty")
+	}
 
-	resp, err := c.HTTPClient.Post(fmt.Sprintf("%s/users/%s/tokens", c.HostURL, c.AdminEmail), "application/json", encodedData)
+	mapping, encodedData := map[string]string{"password": c.AdminPassword}, new(bytes.Buffer)
+	err := json.NewEncoder(encodedData).Encode(mapping)
+	if err != nil {
+		return err
+	}
+
+	resp, err := c.HTTPClient.Post(apiLogin(c.HostURL, c.AdminEmail), "application/json", encodedData)
 	if err != nil {
 		return err
 	}
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
 	}
-
+	
 	defer resp.Body.Close()
 	var data map[string]interface{}
-	json.NewDecoder(resp.Body).Decode(&data)
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return err
+	}
+
 	c.Token = fmt.Sprintf("%s", data["token"])
 	if c.Token == "" {
-		return err
+		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
 	}
 
 	return nil

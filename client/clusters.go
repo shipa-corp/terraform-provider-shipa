@@ -57,7 +57,7 @@ func NewCreateClusterRequest(from *TerraformCreateClusterRequest) *CreateCluster
 	out.Endpoint = from.Endpoint
 	if from.Resources != nil {
 		out.Resources = &ClusterResourcesCreate{
-			Frameworks: convertTerraformFrameworks(from.Resources.Frameworks),
+			Frameworks:         convertTerraformFrameworks(from.Resources.Frameworks),
 			IngressControllers: from.Resources.IngressControllers,
 		}
 	}
@@ -82,7 +82,7 @@ func NewTerraformCreateClusterRequest(from *CreateClusterRequest) *TerraformCrea
 	out.Endpoint = from.Endpoint
 	if from.Resources != nil {
 		out.Resources = &TerraformClusterResourcesCreate{
-			Frameworks: convertFrameworks(from.Resources.Frameworks),
+			Frameworks:         convertFrameworks(from.Resources.Frameworks),
 			IngressControllers: from.Resources.IngressControllers,
 		}
 	}
@@ -104,7 +104,6 @@ func convertFrameworks(input []*Framework) *TerraformFramework {
 	}
 	return out
 }
-
 
 func (c *Client) GetCluster(name string) (*CreateClusterRequest, error) {
 	cluster := &CreateClusterRequest{}

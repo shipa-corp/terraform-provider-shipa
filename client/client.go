@@ -51,9 +51,11 @@ func apiRoleUser(role string) string {
 }
 
 type Client struct {
-	HostURL    string
-	HTTPClient *http.Client
-	Token      string
+	HostURL       string
+	HTTPClient    *http.Client
+	Token         string
+	AdminEmail    string
+	AdminPassword string
 }
 
 type Option func(*Client) error
@@ -74,6 +76,18 @@ func WithHost(host string) Option {
 		}
 
 		client.HostURL = host
+		return nil
+	}
+}
+
+func WithAdminAuth(adminEmail string, adminPassword string) Option {
+	return func(client *Client) error {
+		if adminEmail == "" || adminPassword == "" {
+			return errors.New("admin_email and admin_password can not be empty")
+		}
+
+		client.AdminEmail = adminEmail
+		client.AdminPassword = adminPassword
 		return nil
 	}
 }
@@ -109,6 +123,12 @@ func NewClient(options ...Option) (*Client, error) {
 }
 
 func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
+	if c.Token == "" {
+		err := c.authenticate()
+		if err != nil {
+			return nil, 0, err
+		}
+	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.Token)
 
@@ -121,6 +141,29 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 	body, err := ioutil.ReadAll(res.Body)
 
 	return body, res.StatusCode, err
+}
+
+func (c *Client) authenticate() error {
+	mapping, encodedData := map[string]string{"password": c.AdminPassword}, new(bytes.Buffer)
+	json.NewEncoder(encodedData).Encode(mapping)
+
+	resp, err := c.HTTPClient.Post(fmt.Sprintf("%s/users/%s/tokens", c.HostURL, c.AdminEmail), "application/json", encodedData)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
+	}
+
+	defer resp.Body.Close()
+	var data map[string]interface{}
+	json.NewDecoder(resp.Body).Decode(&data)
+	c.Token = fmt.Sprintf("%s", data["token"])
+	if c.Token == "" {
+		return err
+	}
+
+	return nil
 }
 
 func (c *Client) get(out interface{}, urlPath ...string) error {
@@ -342,9 +385,4 @@ func (c *Client) deleteWithPayload(payload interface{}, params map[string]string
 
 func ErrStatus(statusCode int, body []byte) error {
 	return fmt.Errorf("status: %d, body: %s", statusCode, body)
-}
-
-func (c *Client) testAuthentication() error {
-	_, err := c.ListPlans()
-	return err
 }

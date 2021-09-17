@@ -28,7 +28,7 @@ func NewHandler(endpoint string, handlerFunc func(http.ResponseWriter, *http.Req
 func PrintJsonHandler(endpoint string, payload interface{}, wantMethod string) Handler {
 	return NewHandler(endpoint, func(w http.ResponseWriter, request *http.Request) {
 		if request.Method != wantMethod {
-			panic(fmt.Errorf("method doesn't metach, want %s, got %s", wantMethod, request.Method))
+			panic(fmt.Errorf("method doesn't match, want %s, got %s", wantMethod, request.Method))
 		}
 
 		data, err := json.Marshal(payload)
@@ -53,7 +53,7 @@ func CheckPayloadHandler(endpoint string, wantPayload interface{}, wantMethod st
 		}
 
 		if request.Method != wantMethod {
-			panic(fmt.Errorf("method doesn't metach, want %s, got %s", wantMethod, request.Method))
+			panic(fmt.Errorf("method doesn't match, want %s, got %s", wantMethod, request.Method))
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
@@ -95,7 +95,7 @@ func checkForm(payload interface{}, body url.Values) error {
 	wantJson := string(want)
 	gotJson := string(got)
 	if wantJson != gotJson {
-		return fmt.Errorf("payload doesn't metach, want %s, got %s", wantJson, gotJson)
+		return fmt.Errorf("payload doesn't match, want %s, got %s", wantJson, gotJson)
 	}
 	return nil
 }
@@ -118,7 +118,7 @@ func checkJson(wantPayload interface{}, body []byte) error {
 func CheckMethodHandler(endpoint, wantMethod string) Handler {
 	return NewHandler(endpoint, func(w http.ResponseWriter, request *http.Request) {
 		if request.Method != wantMethod {
-			panic(fmt.Errorf("method doesn't metach, want %s, got %s", wantMethod, request.Method))
+			panic(fmt.Errorf("method doesn't match, want %s, got %s", wantMethod, request.Method))
 		}
 		w.WriteHeader(http.StatusOK)
 	})

@@ -147,7 +147,6 @@ type CreateAppEnv struct {
 	Private   bool      `json:"private"`
 }
 
-
 type DeleteAppEnv struct {
 	Envs      []*AppEnv `json:"envs"`
 	NoRestart bool      `json:"norestart"`

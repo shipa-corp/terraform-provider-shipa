@@ -23,6 +23,18 @@ func Provider() *schema.Provider {
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("SHIPA_TOKEN", nil),
 			},
+			"admin_email": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("SHIPA_ADMIN_EMAIL", nil),
+			},
+			"admin_password": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("SHIPA_ADMIN_PASSWORD", nil),
+			},
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -52,15 +64,20 @@ func Provider() *schema.Provider {
 }
 
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+	var c *client.Client
+	var err error
+
 	token := d.Get("token").(string)
 	host := d.Get("host").(string)
+	adminEmail := d.Get("admin_email").(string)
+	adminPassword := d.Get("admin_password").(string)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	c, err := client.NewClient(
+	c, err = client.NewClient(
 		client.WithHost(host),
-		client.WithToken(token))
+		client.WithAuth(token, adminEmail, adminPassword))
 
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{

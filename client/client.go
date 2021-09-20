@@ -50,10 +50,16 @@ func apiRoleUser(role string) string {
 	return fmt.Sprintf("%s/%s/user", apiRoles, role)
 }
 
+func apiLogin(host string, user string) string {
+    return fmt.Sprintf("%s/%s/%s/tokens", host, apiUsers, user)
+}
+
 type Client struct {
-	HostURL    string
-	HTTPClient *http.Client
-	Token      string
+	HostURL       string
+	HTTPClient    *http.Client
+	Token         string
+	AdminEmail    string
+	AdminPassword string
 }
 
 type Option func(*Client) error
@@ -78,13 +84,15 @@ func WithHost(host string) Option {
 	}
 }
 
-func WithToken(token string) Option {
+func WithAuth(token string, adminEmail string, adminPassword string) Option {
 	return func(client *Client) error {
-		if token == "" {
-			return errors.New("token can not be empty")
+		if (adminEmail == "" || adminPassword == "") && token == "" {
+			return errors.New("either token or admin_email and admin_password must not be empty")
 		}
 
 		client.Token = token
+		client.AdminEmail = adminEmail
+		client.AdminPassword = adminPassword
 		return nil
 	}
 }
@@ -109,6 +117,12 @@ func NewClient(options ...Option) (*Client, error) {
 }
 
 func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
+	if c.Token == "" {
+		err := c.authenticate()
+		if err != nil {
+			return nil, 0, err
+		}
+	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.Token)
 
@@ -121,6 +135,40 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 	body, err := ioutil.ReadAll(res.Body)
 
 	return body, res.StatusCode, err
+}
+
+func (c *Client) authenticate() error {
+	if c.AdminEmail == "" || c.AdminPassword == "" {
+		return errors.New("admin_email and admin_password can not be empty")
+	}
+
+	mapping, encodedData := map[string]string{"password": c.AdminPassword}, new(bytes.Buffer)
+	err := json.NewEncoder(encodedData).Encode(mapping)
+	if err != nil {
+		return err
+	}
+
+	resp, err := c.HTTPClient.Post(apiLogin(c.HostURL, c.AdminEmail), "application/json", encodedData)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
+	}
+	
+	defer resp.Body.Close()
+	var data map[string]interface{}
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return err
+	}
+
+	c.Token = fmt.Sprintf("%s", data["token"])
+	if c.Token == "" {
+		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
+	}
+
+	return nil
 }
 
 func (c *Client) get(out interface{}, urlPath ...string) error {
@@ -342,9 +390,4 @@ func (c *Client) deleteWithPayload(payload interface{}, params map[string]string
 
 func ErrStatus(statusCode int, body []byte) error {
 	return fmt.Errorf("status: %d, body: %s", statusCode, body)
-}
-
-func (c *Client) testAuthentication() error {
-	_, err := c.ListPlans()
-	return err
 }

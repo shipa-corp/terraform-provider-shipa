@@ -91,7 +91,7 @@ type NetworkPolicyRule struct {
 
 type NetworkPort struct {
 	Protocol string `json:"protocol,omitempty"`
-	Port     int64    `json:"port,omitempty"`
+	Port     int64  `json:"port,omitempty"`
 }
 
 //type NetworkPortDetails struct {
@@ -116,7 +116,6 @@ type SelectorExpression struct {
 	Operator string   `json:"operator,omitempty"`
 	Values   []string `json:"values,omitempty"`
 }
-
 
 func (c *Client) GetPoolConfig(name string) (*PoolConfig, error) {
 	poolConfig := &PoolConfig{}

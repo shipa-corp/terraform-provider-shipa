@@ -20,7 +20,7 @@ func (c *Client) GetPermission(role string) (*Permission, error) {
 	}
 
 	return &Permission{
-		Role: req.Role,
+		Role:        req.Role,
 		Permissions: req.Permissions,
 	}, nil
 }

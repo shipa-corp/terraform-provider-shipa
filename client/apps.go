@@ -234,7 +234,7 @@ func getAppDeployParams(req *AppDeploy) map[string]string {
 		params["step-interval"] = strconv.FormatInt(req.StepInterval, 10)
 	}
 	if req.Port > 0 {
-		params["port"] = strconv.FormatInt(req.Port, 10)
+		params["port-number"] = strconv.FormatInt(req.Port, 10)
 	}
 	if req.Detach {
 		params["detach"] = "true"

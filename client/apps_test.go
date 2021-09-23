@@ -69,9 +69,9 @@ func TestClient_DeleteApp(t *testing.T) {
 }
 
 func TestClient_DeployApp(t *testing.T) {
-	payload := &AppDeploy{Image: "dockerhub-image"}
+	payload := &AppDeploy{Image: "dockerhub-image", Port: 8080}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps/app/", map[string][]string{"image": {"dockerhub-image"}}, http.MethodPost),
+		clientest.CheckPayloadHandler("/apps/app/", map[string][]string{"image": {"dockerhub-image"}, "port-number": {"8080"}}, http.MethodPost),
 	)
 	defer teardown()
 

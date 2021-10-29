@@ -17,7 +17,6 @@ var (
 	schemaAppDeploy = &schema.Schema{
 		Type:     schema.TypeList,
 		Required: true,
-		ForceNew: true,
 		MaxItems: 1,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
@@ -72,7 +71,8 @@ var (
 
 func resourceAppDeploy() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceAppDeployCreate,
+		CreateContext: resourceAppDeployCreateUpdate,
+		UpdateContext: resourceAppDeployCreateUpdate,
 		ReadContext:   resourceAppDeployRead,
 		DeleteContext: resourceAppDeployDelete,
 		Schema: map[string]*schema.Schema{
@@ -86,7 +86,7 @@ func resourceAppDeploy() *schema.Resource {
 	}
 }
 
-func resourceAppDeployCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAppDeployCreateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 

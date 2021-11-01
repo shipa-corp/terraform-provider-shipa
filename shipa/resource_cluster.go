@@ -31,9 +31,9 @@ var (
 					Required: true,
 				},
 				"token": {
-					Type:     schema.TypeString,
-					Optional: true,
-					Sensitive: true,
+					Type:          schema.TypeString,
+					Optional:      true,
+					Sensitive:     true,
 					ConflictsWith: []string{"cluster.0.endpoint.0.password", "cluster.0.endpoint.0.username"},
 				},
 				"client_key": {
@@ -45,15 +45,15 @@ var (
 					Optional: true,
 				},
 				"username": {
-					Type:      schema.TypeString,
-					Optional:  true,
+					Type:         schema.TypeString,
+					Optional:     true,
 					RequiredWith: []string{"cluster.0.endpoint.0.password"},
 				},
 				"password": {
-					Type:      schema.TypeString,
-					Optional:  true,
-					Sensitive: true,
-					RequiredWith: []string{"cluster.0.endpoint.0.username"},
+					Type:          schema.TypeString,
+					Optional:      true,
+					Sensitive:     true,
+					RequiredWith:  []string{"cluster.0.endpoint.0.username"},
 					ConflictsWith: []string{"cluster.0.endpoint.0.token"},
 				},
 			},
@@ -65,7 +65,7 @@ var (
 		Required: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
-				"frameworks": schemaClusterFrameworks,
+				"frameworks":          schemaClusterFrameworks,
 				"ingress_controllers": schemaIngressControllersCreate,
 			},
 		},
@@ -100,14 +100,14 @@ var (
 				"service_type": {
 					Type:     schema.TypeString,
 					Optional: true,
-					ValidateDiagFunc: func(val interface{}, key cty.Path) (diag.Diagnostics) {
+					ValidateDiagFunc: func(val interface{}, key cty.Path) diag.Diagnostics {
 						var diags diag.Diagnostics
 
 						v := val.(string)
 
 						log.Println(">>>> GOT VALUE: ", v)
 
-						allowedValues := []string{"traefik", "istio"}
+						allowedValues := []string{"LoadBalancer", "NodePort", "ClusterIP"}
 						for _, allowed := range allowedValues {
 							if allowed == v {
 								return diags
@@ -120,6 +120,22 @@ var (
 				"type": {
 					Type:     schema.TypeString,
 					Optional: true,
+					ValidateDiagFunc: func(val interface{}, key cty.Path) diag.Diagnostics {
+						var diags diag.Diagnostics
+
+						v := val.(string)
+
+						log.Println(">>>> GOT VALUE: ", v)
+
+						allowedValues := []string{"traefik", "istio", "nginx"}
+						for _, allowed := range allowedValues {
+							if allowed == v {
+								return diags
+							}
+						}
+
+						return diag.Errorf("invalid value: %s, choose one of: %+v", v, allowedValues)
+					},
 				},
 				"http_port": {
 					Type:     schema.TypeInt,
@@ -148,7 +164,6 @@ var (
 			},
 		},
 	}
-
 )
 
 func resourceCluster() *schema.Resource {

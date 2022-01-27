@@ -428,7 +428,7 @@ var (
 			Schema: map[string]*schema.Schema{
 				"terms": {
 					Type:     schema.TypeMap,
-					MinItems: 1,
+					Required: true,
 					Elem: &schema.Schema{
 						Type: schema.TypeString,
 					},
@@ -447,21 +447,21 @@ var (
 		Optional: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
-				"disableAppOverride": {
+				"disable_app_override": {
 					Type:     schema.TypeBool,
 					Optional: true,
 				},
-				"maxReplicas": {
+				"max_replicas": {
 					Type:     schema.TypeInt,
 					Required: true,
 					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),
 				},
-				"minReplicas": {
+				"min_replicas": {
 					Type:     schema.TypeInt,
 					Required: true,
 					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),
 				},
-				"targetCPUUtilizationPercentage": {
+				"target_cpu_utilization_percentage": {
 					Type:     schema.TypeInt,
 					Required: true,
 					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),

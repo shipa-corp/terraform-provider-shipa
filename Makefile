@@ -1,15 +1,15 @@
-HOSTNAME=shipa.io
-NAMESPACE=terraform
-NAME=shipa
-BINARY=terraform-provider-${NAME}
+SHIPA_LOCAL_PROVIDER_NAMESPACE=terraform.local/local/shipa
 VERSION=0.0.7
-#OS_ARCH=darwin_amd64
-OS_ARCH=linux_amd64
+BINARY=terraform-provider-shipa_v${VERSION}
 default: install
 
 build:
 	go build -o ${BINARY}
 
+install: GOOS=$(shell go env GOOS)
+install: GOARCH=$(shell go env GOARCH)
+install: DESTINATION=$(HOME)/.terraform.d/plugins/$(SHIPA_LOCAL_PROVIDER_NAMESPACE)/$(VERSION)/$(GOOS)_$(GOARCH)
 install: build
-	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
-	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+	mkdir -p ${DESTINATION}
+	mv ${BINARY} ${DESTINATION}
+

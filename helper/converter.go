@@ -57,7 +57,6 @@ func TerraformToStruct(source interface{}, target interface{}) {
 				continue
 			}
 
-
 			targetValue := tVal.Field(i)
 			//log.Printf("val: %+v, type: %t\n", val, val)
 			targetValue.Set(convertVal(sourceValue, targetValue))
@@ -77,12 +76,17 @@ func getTerraformFieldName(field reflect.StructField) string {
 }
 
 func convertVal(from, to reflect.Value) reflect.Value {
-	//log.Println("from >> Kind:", from.Kind(), "Type:", from.Type())
-	//log.Println("to >> Kind:", to.Kind(), "Type:", to.Type())
+	//log.Println("from >> Kind:", from.Kind(), "Type:", from.Type(), "Type.Kind", from.Type().Kind())
+	//log.Println("to >> Kind:", to.Kind(), "Type:", to.Type(), "Type.Kind", to.Type().Kind())
+
+	if from.Type() == to.Type() && from.Kind() == to.Kind() {
+		return from
+	}
 
 	switch from.Type().Kind() {
 	case reflect.Int, reflect.Int64:
 		return reflect.ValueOf(from.Int())
+
 	case reflect.Float32, reflect.Float64:
 		return reflect.ValueOf(from.Float())
 
@@ -133,15 +137,15 @@ func convertVal(from, to reflect.Value) reflect.Value {
 				// case when we have basic types
 				case reflect.String, reflect.Bool, reflect.Int, reflect.Int64, reflect.Float64:
 					item = from.MapIndex(key).Elem()
-				//default:
-				//	// case when we have pointer elements
-				//	if to.Type().Elem().Kind() == reflect.Ptr {
-				//		item = reflect.New(to.Type().Elem().Elem())
-				//	} else {
-				//		item = reflect.New(to.Type().Elem())
-				//	}
-				//
-				//	item = convertVal(from.Index(i), item)
+					//default:
+					//	// case when we have pointer elements
+					//	if to.Type().Elem().Kind() == reflect.Ptr {
+					//		item = reflect.New(to.Type().Elem().Elem())
+					//	} else {
+					//		item = reflect.New(to.Type().Elem())
+					//	}
+					//
+					//	item = convertVal(from.Index(i), item)
 				}
 
 				// if target slice is not slice of pointers
@@ -155,8 +159,6 @@ func convertVal(from, to reflect.Value) reflect.Value {
 			return m
 		}
 	}
-
-
 
 	if to.Kind() == reflect.Ptr {
 		if to.IsNil() {

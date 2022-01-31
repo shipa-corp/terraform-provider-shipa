@@ -33,6 +33,9 @@ type PoolGeneral struct {
 	AppQuota        *PoolAppQuota        `json:"appQuota,omitempty"`
 	ContainerPolicy *PoolContainerPolicy `json:"containerPolicy,omitempty"`
 	NetworkPolicy   *PoolNetworkPolicy   `json:"networkPolicy,omitempty"`
+	DomainPolicy    *PoolDomainPolicy    `json:"domainPolicy,omitempty"`
+	NodeSelector    *PoolNodeSelector    `json:"nodeSelector,omitempty"`
+	PodAutoScaler   *PoolPodAutoScaler   `json:"podAutoScaler,omitempty"`
 }
 
 type PoolContainerPolicy struct {
@@ -115,6 +118,22 @@ type SelectorExpression struct {
 	Key      string   `json:"key,omitempty"`
 	Operator string   `json:"operator,omitempty"`
 	Values   []string `json:"values,omitempty"`
+}
+
+type PoolDomainPolicy struct {
+	AllowedCnames []string `json:"allowedCnames,omitempty"`
+}
+
+type PoolNodeSelector struct {
+	Terms  map[string]string `json:"terms"`
+	Strict bool              `json:"disableAppOverride"`
+}
+
+type PoolPodAutoScaler struct {
+	DisableAppOverride             bool `json:"disableAppOverride"`
+	MaxReplicas                    int  `json:"maxReplicas"`
+	MinReplicas                    int  `json:"minReplicas"`
+	TargetCPUUtilizationPercentage int  `json:"targetCPUUtilizationPercentage"`
 }
 
 func (c *Client) GetPoolConfig(name string) (*PoolConfig, error) {

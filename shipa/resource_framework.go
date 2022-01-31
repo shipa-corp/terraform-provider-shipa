@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
 	"github.com/shipa-corp/terraform-provider-shipa/client"
 	"github.com/shipa-corp/terraform-provider-shipa/helper"
@@ -93,6 +94,9 @@ var (
 				"app_quota":        schemaPoolConfigGeneralAppQuota,
 				"container_policy": schemaPoolConfigGeneralContainerPolicy,
 				"network_policy":   schemaPoolConfigGeneralNetworkPolicy,
+				"domain_policy":    schemaPoolConfigGeneralDomainPolicy,
+				"node_selector":    schemaPoolConfigGeneralNodeSelector,
+				"pod_auto_scaler":  schemaPoolConfigGeneralPodAutoScaler,
 			},
 		},
 	}
@@ -394,6 +398,73 @@ var (
 					Elem: &schema.Schema{
 						Type: schema.TypeString,
 					},
+				},
+			},
+		},
+	}
+
+	schemaPoolConfigGeneralDomainPolicy = &schema.Schema{
+		Type:     schema.TypeList,
+		MaxItems: 1,
+		Optional: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{
+				"allowed_cnames": {
+					Type:     schema.TypeList,
+					Optional: true,
+					Elem: &schema.Schema{
+						Type: schema.TypeString,
+					},
+				},
+			},
+		},
+	}
+
+	schemaPoolConfigGeneralNodeSelector = &schema.Schema{
+		Type:     schema.TypeList,
+		MaxItems: 1,
+		Optional: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{
+				"terms": {
+					Type:     schema.TypeMap,
+					Required: true,
+					Elem: &schema.Schema{
+						Type: schema.TypeString,
+					},
+				},
+				"strict": {
+					Type:     schema.TypeBool,
+					Optional: true,
+				},
+			},
+		},
+	}
+
+	schemaPoolConfigGeneralPodAutoScaler = &schema.Schema{
+		Type:     schema.TypeList,
+		MaxItems: 1,
+		Optional: true,
+		Elem: &schema.Resource{
+			Schema: map[string]*schema.Schema{
+				"disable_app_override": {
+					Type:     schema.TypeBool,
+					Optional: true,
+				},
+				"max_replicas": {
+					Type:     schema.TypeInt,
+					Required: true,
+					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),
+				},
+				"min_replicas": {
+					Type:     schema.TypeInt,
+					Required: true,
+					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),
+				},
+				"target_cpu_utilization_percentage": {
+					Type:     schema.TypeInt,
+					Required: true,
+					ValidateDiagFunc: validation.ToDiagFunc(validation.IntAtLeast(1)),
 				},
 			},
 		},

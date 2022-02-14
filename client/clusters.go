@@ -7,8 +7,8 @@ type TerraformCreateClusterRequest struct {
 }
 
 type TerraformClusterResourcesCreate struct {
-	Frameworks         *TerraformFramework         `json:"frameworks,omitempty"`
-	IngressControllers []*IngressControllersCreate `json:"ingressControllers,omitempty" terraform:"ingress_controllers"`
+	Frameworks        *TerraformFramework      `json:"frameworks,omitempty"`
+	IngressController *IngressControllerCreate `json:"ingressController,omitempty" terraform:"ingress_controller"`
 }
 
 type TerraformFramework struct {
@@ -32,11 +32,11 @@ type ClusterEndpointCreate struct {
 }
 
 type ClusterResourcesCreate struct {
-	Frameworks         []*Framework                `json:"frameworks,omitempty"`
-	IngressControllers []*IngressControllersCreate `json:"ingressControllers,omitempty" terraform:"ingress_controllers"`
+	Frameworks        []*Framework             `json:"frameworks,omitempty"`
+	IngressController *IngressControllerCreate `json:"ingressController,omitempty" terraform:"ingress_controller"`
 }
 
-type IngressControllersCreate struct {
+type IngressControllerCreate struct {
 	IngressIP     string `json:"ingressIp,omitempty" terraform:"ingress_ip"`
 	ServiceType   string `json:"serviceType,omitempty" terraform:"service_type"`
 	Type          string `json:"type,omitempty"`
@@ -57,8 +57,8 @@ func NewCreateClusterRequest(from *TerraformCreateClusterRequest) *CreateCluster
 	out.Endpoint = from.Endpoint
 	if from.Resources != nil {
 		out.Resources = &ClusterResourcesCreate{
-			Frameworks:         convertTerraformFrameworks(from.Resources.Frameworks),
-			IngressControllers: from.Resources.IngressControllers,
+			Frameworks:        convertTerraformFrameworks(from.Resources.Frameworks),
+			IngressController: from.Resources.IngressController,
 		}
 	}
 
@@ -82,8 +82,8 @@ func NewTerraformCreateClusterRequest(from *CreateClusterRequest) *TerraformCrea
 	out.Endpoint = from.Endpoint
 	if from.Resources != nil {
 		out.Resources = &TerraformClusterResourcesCreate{
-			Frameworks:         convertFrameworks(from.Resources.Frameworks),
-			IngressControllers: from.Resources.IngressControllers,
+			Frameworks:        convertFrameworks(from.Resources.Frameworks),
+			IngressController: from.Resources.IngressController,
 		}
 	}
 

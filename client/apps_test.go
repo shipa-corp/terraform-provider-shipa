@@ -2,8 +2,10 @@ package client
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/shipa-corp/terraform-provider-shipa/client/clientest"
@@ -69,10 +71,35 @@ func TestClient_DeleteApp(t *testing.T) {
 }
 
 func TestClient_DeployApp(t *testing.T) {
-	payload := &AppDeploy{Image: "dockerhub-image", Port: 8080}
-	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps/app/", map[string][]string{"image": {"dockerhub-image"}, "port-number": {"8080"}}, http.MethodPost),
-	)
+	payload := &AppDeploy{Image: "dockerhub-image", Port: &Port{Number: 8080, Protocol: "TCP"}, Detach: true, Message: "test message", Registry: &Registry{User: "steve", Secret: "secret"}}
+
+	client, teardown := setupServer(clientest.NewHandler("/apps/app/", func(w http.ResponseWriter, request *http.Request) {
+		var receivedPayload map[string]interface{}
+		err := json.NewDecoder(request.Body).Decode(&receivedPayload)
+		if err != nil {
+			panic(err)
+		}
+		if request.Method != "POST" {
+			panic(fmt.Errorf("method doesn't match, want %s, got %s", "POST", request.Method))
+		}
+		var iface map[string]interface{}
+		j, err := json.Marshal(payload)
+		if err != nil {
+			panic(err)
+		}
+
+		err = json.Unmarshal(j, &iface)
+		if err != nil {
+			panic(err)
+		}
+
+		if !reflect.DeepEqual(iface, receivedPayload) {
+			panic(fmt.Sprintf("payload doesn't match, want %+v, got %+v", iface, receivedPayload))
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+	}))
 	defer teardown()
 
 	if err := client.DeployApp("app", payload); err != nil {

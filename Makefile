@@ -1,5 +1,5 @@
 SHIPA_LOCAL_PROVIDER_NAMESPACE=terraform.local/local/shipa
-VERSION=0.0.7
+VERSION=0.0.8
 BINARY=terraform-provider-shipa_v${VERSION}
 default: install
 

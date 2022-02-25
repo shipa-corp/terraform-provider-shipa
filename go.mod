@@ -26,7 +26,7 @@ require (
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/hashicorp/go-getter v1.5.0 // indirect
-	github.com/hashicorp/go-hclog v0.15.0 // indirect
+	github.com/hashicorp/go-hclog v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.0.0 // indirect
 	github.com/hashicorp/go-plugin v1.4.0 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
@@ -37,6 +37,7 @@ require (
 	github.com/hashicorp/terraform-exec v0.13.0 // indirect
 	github.com/hashicorp/terraform-json v0.8.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.2.1 // indirect
+	github.com/hashicorp/terraform-plugin-log v0.2.1 // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/jstemmer/go-junit-report v0.9.1 // indirect
@@ -44,7 +45,7 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
-	github.com/mitchellh/go-testing-interface v1.0.4 // indirect
+	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.0 // indirect
 	github.com/mitchellh/mapstructure v1.1.2 // indirect
 	github.com/mitchellh/reflectwalk v1.0.1 // indirect

@@ -218,7 +218,6 @@ func TestConvertMaps(t *testing.T) {
 	data, _ := json.Marshal(rawData)
 	log.Println("JSON from RAW data:", string(data))
 
-
 	object = &client.NetworkPeerSelector{}
 	TerraformToStruct(rawData, object)
 	data, _ = json.Marshal(object)

@@ -46,7 +46,7 @@ func resourceAppCnameCreate(ctx context.Context, d *schema.ResourceData, m inter
 	encrypt := d.Get("encrypt").(bool)
 
 	req := &client.AppCname{
-		Cname: cname,
+		Cname:  cname,
 		Scheme: getScheme(encrypt),
 	}
 
@@ -95,7 +95,7 @@ func resourceAppCnameUpdate(ctx context.Context, d *schema.ResourceData, m inter
 	encrypt := d.Get("encrypt").(bool)
 
 	req := &client.AppCname{
-		Cname: cname,
+		Cname:  cname,
 		Scheme: getScheme(encrypt),
 	}
 
@@ -119,7 +119,7 @@ func resourceAppCnameDelete(ctx context.Context, d *schema.ResourceData, m inter
 	encrypt := d.Get("encrypt").(bool)
 
 	req := &client.AppCname{
-		Cname: cname,
+		Cname:  cname,
 		Scheme: getScheme(encrypt),
 	}
 

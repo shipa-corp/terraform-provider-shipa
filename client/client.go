@@ -51,7 +51,7 @@ func apiRoleUser(role string) string {
 }
 
 func apiLogin(host string, user string) string {
-    return fmt.Sprintf("%s/%s/%s/tokens", host, apiUsers, user)
+	return fmt.Sprintf("%s/%s/%s/tokens", host, apiUsers, user)
 }
 
 type Client struct {
@@ -155,7 +155,7 @@ func (c *Client) authenticate() error {
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("could not retrieve token for %s", c.AdminEmail)
 	}
-	
+
 	defer resp.Body.Close()
 	var data map[string]interface{}
 	err = json.NewDecoder(resp.Body).Decode(&data)

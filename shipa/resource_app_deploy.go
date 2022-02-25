@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
 	"github.com/shipa-corp/terraform-provider-shipa/client"
 	"github.com/shipa-corp/terraform-provider-shipa/helper"
@@ -26,38 +28,94 @@ var (
 					Required: true,
 				},
 				// Optional
-				"private_image": {
-					Type:     schema.TypeBool,
-					Optional: true,
-				},
-				"registry_user": {
-					Type:         schema.TypeString,
-					Optional:     true,
-					RequiredWith: []string{"deploy.0.private_image"},
-				},
-				"registry_secret": {
-					Type:         schema.TypeString,
-					Optional:     true,
-					RequiredWith: []string{"deploy.0.private_image"},
-				},
-				"steps": {
-					Type:     schema.TypeInt,
-					Optional: true,
-				},
-				"step_weight": {
-					Type:     schema.TypeInt,
-					Optional: true,
-				},
-				"step_interval": {
-					Type:     schema.TypeInt,
-					Optional: true,
-				},
 				"port": {
-					Type:     schema.TypeInt,
+					Type:     schema.TypeList,
 					Optional: true,
+					MaxItems: 1,
+					Elem: &schema.Resource{
+						Schema: map[string]*schema.Schema{
+							"number": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+							"protocol": {
+								Type:         schema.TypeString,
+								Required:     true,
+								ValidateFunc: validation.StringInSlice([]string{"TCP", "UDP"}, false),
+							},
+						},
+					},
+				},
+				"registry": {
+					Type:     schema.TypeList,
+					Optional: true,
+					MaxItems: 1,
+					Elem: &schema.Resource{
+						Schema: map[string]*schema.Schema{
+							"user": {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+							"secret": {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+						},
+					},
+				},
+				"origin": {
+					Type:     schema.TypeString,
+					Optional: true,
+				},
+				"canary_settings": {
+					Type:     schema.TypeList,
+					Optional: true,
+					MaxItems: 1,
+					Elem: &schema.Resource{
+						Schema: map[string]*schema.Schema{
+							"steps": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+							"step_weight": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+							"step_interval": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+						},
+					},
+				},
+				"shipa_yaml": {
+					Type:     schema.TypeString,
+					Optional: true,
+				},
+				"pod_auto_scaler": {
+					Type:     schema.TypeList,
+					Optional: true,
+					MaxItems: 1,
+					Elem: &schema.Resource{
+						Schema: map[string]*schema.Schema{
+							"min_replicas": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+							"max_replicas": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+							"target_cpu_utilization_percentage": {
+								Type:     schema.TypeInt,
+								Required: true,
+							},
+						},
+					},
 				},
 				"detach": {
 					Type:     schema.TypeBool,
+					Default:  false,
 					Optional: true,
 				},
 				"message": {
@@ -94,6 +152,7 @@ func resourceAppDeployCreateUpdate(ctx context.Context, d *schema.ResourceData, 
 	deploy := d.Get("deploy").([]interface{})[0].(map[string]interface{})
 	req := &client.AppDeploy{}
 	helper.TerraformToStruct(deploy, req)
+	tflog.Info(ctx, "app deploy request", req)
 
 	c := m.(*client.Client)
 

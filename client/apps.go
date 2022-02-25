@@ -1,7 +1,5 @@
 package client
 
-import "strconv"
-
 type UpdateAppRequest struct {
 	Pool        string   `json:"pool,omitempty"`
 	TeamOwner   string   `json:"teamowner,omitempty"`
@@ -199,49 +197,39 @@ func (c *Client) DeleteAppCname(appName string, req *AppCname) error {
 }
 
 type AppDeploy struct {
-	Image          string `json:"image"`
-	PrivateImage   bool   `json:"private-image,omitempty" terraform:"private_image"`
-	RegistryUser   string `json:"registry-user,omitempty" terraform:"registry_user"`
-	RegistrySecret string `json:"registry-secret,omitempty" terraform:"registry_secret"`
-	Steps          int64  `json:"steps,omitempty"`
-	StepWeight     int64  `json:"step-weight,omitempty" terraform:"step_weight"`
-	StepInterval   int64  `json:"step-interval,omitempty" terraform:"step_interval"`
-	Port           int64  `json:"port,omitempty"`
-	Detach         bool   `json:"detach"`
-	Message        string `json:"message,omitempty"`
+	Image          string          `json:"image"`
+	Port           *Port           `json:"port,omitempty"`
+	Detach         bool            `json:"detach"`
+	Message        string          `json:"message,omitempty"`
+	Registry       *Registry       `json:"registry,omitempty"`
+	Origin         string          `json:"origin,omitempty"`
+	CanarySettings *CanarySettings `json:"canarySettings,omitempty" terraform:"canary_settings"`
+	ShipaYaml      string          `json:"shipaYaml,omitempty" terraform:"shipa_yaml"`
+	PodAutoScaler  *PodAutoScaler  `json:"podAutoScaler,omitempty" terraform:"pod_auto_scaler"`
+}
+
+type Registry struct {
+	User   string `json:"user"`
+	Secret string `json:"secret"`
+}
+
+type CanarySettings struct {
+	Steps        int `json:"steps,omitempty"`
+	StepWeight   int `json:"stepWeight,omitempty" terraform:"step_weight"`
+	StepInterval int `json:"stepInterval,omitempty" terraform:"step_interval"`
+}
+
+type Port struct {
+	Number   int    `json:"number"`
+	Protocol string `json:"protocol"`
+}
+
+type PodAutoScaler struct {
+	MinReplicas                    int `json:"minReplicas" terraform:"min_replicas"`
+	MaxReplicas                    int `json:"maxReplicas" terraform:"max_replicas"`
+	TargetCPUUtilizationPercentage int `json:"targetCPUUtilizationPercentage" terraform:"target_cpu_utilization_percentage"`
 }
 
 func (c *Client) DeployApp(appName string, req *AppDeploy) error {
-	return c.postURLEncoded(getAppDeployParams(req), apiAppDeploy(appName))
-}
-
-func getAppDeployParams(req *AppDeploy) map[string]string {
-	params := map[string]string{
-		"image": req.Image,
-	}
-	if req.PrivateImage {
-		params["private-image"] = "true"
-		params["registry-user"] = req.RegistryUser
-		params["registry-secret"] = req.RegistrySecret
-	}
-	if req.Steps > 0 {
-		params["steps"] = strconv.FormatInt(req.Steps, 10)
-	}
-	if req.StepWeight > 0 {
-		params["step-weight"] = strconv.FormatInt(req.StepWeight, 10)
-	}
-	if req.StepInterval > 0 {
-		params["step-interval"] = strconv.FormatInt(req.StepInterval, 10)
-	}
-	if req.Port > 0 {
-		params["port-number"] = strconv.FormatInt(req.Port, 10)
-	}
-	if req.Detach {
-		params["detach"] = "true"
-	}
-	if req.Message != "" {
-		params["message"] = req.Message
-	}
-
-	return params
+	return c.post(req, apiAppDeploy(appName))
 }

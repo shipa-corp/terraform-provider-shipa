@@ -79,7 +79,6 @@ var (
 					Type:     schema.TypeString,
 					Computed: true,
 				},
-
 			},
 		},
 	}
@@ -148,7 +147,6 @@ func resourceAppUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 
 	app := d.Get("app").([]interface{})[0].(map[string]interface{})
 	log.Printf(" ### RAW app data: %+v\n", app)
-
 
 	req := &client.App{}
 	helper.TerraformToStruct(app, req)

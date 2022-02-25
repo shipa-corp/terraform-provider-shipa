@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"testing"
@@ -69,9 +70,35 @@ func TestClient_DeleteApp(t *testing.T) {
 }
 
 func TestClient_DeployApp(t *testing.T) {
-	payload := &AppDeploy{Image: "dockerhub-image", Port: 8080}
+	payload := &AppDeploy{Image: "dockerhub-image", Port: 8080, Detach: true, Message: "test message", RegistryUser: "steve", RegistrySecret: "secret"}
 	client, teardown := setupServer(
-		clientest.CheckPayloadHandler("/apps/app/", map[string][]string{"image": {"dockerhub-image"}, "port-number": {"8080"}}, http.MethodPost),
+		clientest.NewHandler("/apps/app/", func(w http.ResponseWriter, request *http.Request) {
+			var app AppDeployRequest
+			err := json.NewDecoder(request.Body).Decode(&app)
+			if err != nil {
+				panic(err)
+			}
+			if app.Image != payload.Image {
+				panic(fmt.Sprintf("got %v, expected %v", app.Image, payload.Image))
+			}
+			if app.Port.Number != int(payload.Port) {
+				panic(fmt.Sprintf("got %v, expected %v", app.Port.Number, payload.Port))
+			}
+			if app.Detach != payload.Detach {
+				panic(fmt.Sprintf("got %v, expected %v", app.Image, payload.Image))
+			}
+			if app.Message != payload.Message {
+				panic(fmt.Sprintf("got %v, expected %v", app.Image, payload.Image))
+			}
+			if app.Registry.User != payload.RegistryUser {
+				panic(fmt.Sprintf("got %v, expected %v", app.Registry.User, payload.RegistryUser))
+			}
+			if request.Method != http.MethodPost {
+				panic(fmt.Errorf("method doesn't match, want %s, got %s", http.MethodPost, request.Method))
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+		}),
 	)
 	defer teardown()
 

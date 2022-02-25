@@ -8,6 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
 	"github.com/shipa-corp/terraform-provider-shipa/client"
 	"github.com/shipa-corp/terraform-provider-shipa/helper"
@@ -56,11 +57,24 @@ var (
 					Type:     schema.TypeInt,
 					Optional: true,
 				},
+				"protocol": {
+					Type:         schema.TypeString,
+					Optional:     true,
+					ValidateFunc: validation.StringInSlice([]string{"TCP", "UDP"}, false),
+				},
 				"detach": {
 					Type:     schema.TypeBool,
 					Optional: true,
 				},
 				"message": {
+					Type:     schema.TypeString,
+					Optional: true,
+				},
+				"shipa_yaml": {
+					Type:     schema.TypeString,
+					Optional: true,
+				},
+				"origin": {
 					Type:     schema.TypeString,
 					Optional: true,
 				},

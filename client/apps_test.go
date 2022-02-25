@@ -132,7 +132,7 @@ func TestClient_UpdateAppCname(t *testing.T) {
 }
 
 func TestClient_DeleteAppCname(t *testing.T) {
-	payload := &AppCname{Cname: "shipa.io"}
+	payload := &AppCnames{Cnames: []string{"shipa.io"}}
 	client, teardown := setupServer(
 		clientest.CheckPayloadHandler("/"+apiAppCname("app"), payload, http.MethodDelete),
 	)

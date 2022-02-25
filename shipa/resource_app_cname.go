@@ -116,11 +116,9 @@ func resourceAppCnameDelete(ctx context.Context, d *schema.ResourceData, m inter
 
 	app := d.Get("app").(string)
 	cname := d.Get("cname").(string)
-	encrypt := d.Get("encrypt").(bool)
 
-	req := &client.AppCname{
-		Cname:  cname,
-		Scheme: getScheme(encrypt),
+	req := &client.AppCnames{
+		Cnames: []string{cname},
 	}
 
 	c := m.(*client.Client)

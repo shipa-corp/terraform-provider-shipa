@@ -184,6 +184,10 @@ type AppCname struct {
 	Scheme string `json:"scheme"`
 }
 
+type AppCnames struct {
+	Cnames []string `json:"cnames"`
+}
+
 func (c *Client) CreateAppCname(appName string, req *AppCname) error {
 	return c.post(req, apiAppCname(appName))
 }
@@ -192,7 +196,7 @@ func (c *Client) UpdateAppCname(appName string, req *AppCname) error {
 	return c.put(req, apiAppCname(appName))
 }
 
-func (c *Client) DeleteAppCname(appName string, req *AppCname) error {
+func (c *Client) DeleteAppCname(appName string, req *AppCnames) error {
 	return c.deleteWithPayload(req, nil, apiAppCname(appName))
 }
 

@@ -57,7 +57,7 @@ func TestNestedStruct(t *testing.T) {
 	}
 	actual := string(data)
 	log.Println(actual)
-	expected := `{"shipa_pool":"test","resources":{"general":{"setup":{"default":false,"public":true},"plan":{"name":"dev"},"security":{"disable_scan":true,"scan_platform_layers":false},"access":{"append":["dev","test"]},"router":"traefik","app_quota":{"limit":"1"}}}}`
+	expected := `{"shipaFramework":"test","resources":{"general":{"setup":{"default":false,"public":true},"plan":{"name":"dev"},"security":{"disableScan":true,"scanPlatformLayers":false},"access":{"append":["dev","test"]},"router":"traefik","appQuota":{"limit":"1"}}}}`
 	if expected != actual {
 		t.Error("json matching failed")
 	}
@@ -184,10 +184,10 @@ func TestConvertStructWithMap(t *testing.T) {
 }
 
 func TestConvertTerraformWithMap(t *testing.T) {
-	expected := `{"matchlabels":{"label_1":"test","label_2":"test"}}`
+	expected := `{"matchLabels":{"label_1":"test","label_2":"test"}}`
 	source := []interface{}{
 		map[string]interface{}{
-			"matchlabels": map[string]interface{}{
+			"match_labels": map[string]interface{}{
 				"label_1": "test",
 				"label_2": "test",
 			},
@@ -208,7 +208,7 @@ func TestConvertTerraformWithMap(t *testing.T) {
 }
 
 func TestConvertMaps(t *testing.T) {
-	input := `{"matchlabels":{"label_1":"test","label_2":"test"}}`
+	input := `{"matchLabels":{"label_1":"test","label_2":"test"}}`
 
 	object := &client.NetworkPeerSelector{}
 	json.Unmarshal([]byte(input), object)
@@ -217,7 +217,6 @@ func TestConvertMaps(t *testing.T) {
 	log.Println("RAW data:", rawData)
 	data, _ := json.Marshal(rawData)
 	log.Println("JSON from RAW data:", string(data))
-
 
 	object = &client.NetworkPeerSelector{}
 	TerraformToStruct(rawData, object)

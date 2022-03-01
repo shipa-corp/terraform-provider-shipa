@@ -1,7 +1,5 @@
 package client
 
-import "strconv"
-
 type UpdateAppRequest struct {
 	Pool        string   `json:"pool,omitempty"`
 	TeamOwner   string   `json:"teamowner,omitempty"`
@@ -187,7 +185,7 @@ type AppCname struct {
 }
 
 type AppCnames struct {
-	Cnames  []string `json:"cnames"`
+	Cnames []string `json:"cnames"`
 }
 
 func (c *Client) CreateAppCname(appName string, req *AppCname) error {
@@ -211,41 +209,75 @@ type AppDeploy struct {
 	StepWeight     int64  `json:"step-weight,omitempty" terraform:"step_weight"`
 	StepInterval   int64  `json:"step-interval,omitempty" terraform:"step_interval"`
 	Port           int64  `json:"port,omitempty"`
+	Protocol       string `json:"protocol,omitempty"`
 	Detach         bool   `json:"detach"`
 	Message        string `json:"message,omitempty"`
+	ShipaYaml      string `json:"shipaYaml,omitempty" terraform:"shipa_yaml"`
+	Origin         string `json:"shipaYaml,omitempty"`
+}
+
+// AppDeployRequest represents the JSON body that deploy /app expects
+type AppDeployRequest struct {
+	Image          string          `json:"image"`
+	Port           *Port           `json:"port,omitempty"`
+	Detach         bool            `json:"detach"`
+	Message        string          `json:"message,omitempty"`
+	Registry       *Registry       `json:"registry,omitempty"`
+	Origin         string          `json:"origin,omitempty"`
+	CanarySettings *CanarySettings `json:"canarySettings,omitempty"`
+	ShipaYaml      string          `json:"shipaYaml,omitempty"`
+}
+
+// Registry represents the JSON body that deploy /app expects
+type Registry struct {
+	User   string `json:"user,omitempty"`
+	Secret string `json:"secret,omitempty"`
+}
+
+// CanarySettings represents the JSON body that deploy /app expects
+type CanarySettings struct {
+	Steps        int `json:"steps,omitempty"`
+	StepWeight   int `json:"stepWeight,omitempty"`
+	StepInterval int `json:"stepInterval,omitempty"`
+}
+
+// Port represents the JSON body that deploy /app expects
+type Port struct {
+	Number   int    `json:"number,omitempty"`
+	Protocol string `json:"protocol,omitempty"`
+}
+
+// PodAutoScaler represents the JSON body that deploy /app expects
+type PodAutoScaler struct {
+	MinReplicas                    int `json:"minReplicas,omitempty"`
+	MaxReplicas                    int `json:"maxReplicas,omitempty"`
+	TargetCPUUtilizationPercentage int `json:"targetCPUUtilizationPercentage,omitempty"`
 }
 
 func (c *Client) DeployApp(appName string, req *AppDeploy) error {
-	return c.postURLEncoded(getAppDeployParams(req), apiAppDeploy(appName))
+	return c.post(getAppDeployRequest(req), apiAppDeploy(appName))
 }
 
-func getAppDeployParams(req *AppDeploy) map[string]string {
-	params := map[string]string{
-		"image": req.Image,
-	}
-	if req.PrivateImage {
-		params["private-image"] = "true"
-		params["registry-user"] = req.RegistryUser
-		params["registry-secret"] = req.RegistrySecret
-	}
-	if req.Steps > 0 {
-		params["steps"] = strconv.FormatInt(req.Steps, 10)
-	}
-	if req.StepWeight > 0 {
-		params["step-weight"] = strconv.FormatInt(req.StepWeight, 10)
-	}
-	if req.StepInterval > 0 {
-		params["step-interval"] = strconv.FormatInt(req.StepInterval, 10)
-	}
-	if req.Port > 0 {
-		params["port-number"] = strconv.FormatInt(req.Port, 10)
-	}
-	if req.Detach {
-		params["detach"] = "true"
-	}
-	if req.Message != "" {
-		params["message"] = req.Message
+func getAppDeployRequest(req *AppDeploy) *AppDeployRequest {
+	return &AppDeployRequest{
+		Image: req.Image,
+		Port: &Port{
+			Number:   int(req.Port),
+			Protocol: req.Protocol,
+		},
+		Detach:  req.Detach,
+		Message: req.Message,
+		Registry: &Registry{
+			User:   req.RegistryUser,
+			Secret: req.RegistrySecret,
+		},
+		Origin: req.Origin,
+		CanarySettings: &CanarySettings{
+			Steps:        int(req.Steps),
+			StepWeight:   int(req.StepWeight),
+			StepInterval: int(req.StepInterval),
+		},
+		ShipaYaml: req.ShipaYaml,
 	}
 
-	return params
 }

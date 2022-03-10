@@ -261,7 +261,7 @@ func convertStructVal(val reflect.Value) interface{} {
 			return val.Interface()
 		}
 
-		slice := make([]interface{}, val.Len(), val.Len())
+		slice := make([]interface{}, val.Len())
 		for i := 0; i < val.Len(); i++ {
 			data := StructToTerraform(val.Index(i).Interface())
 			slice[i] = data[0]

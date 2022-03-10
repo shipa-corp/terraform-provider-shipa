@@ -213,7 +213,7 @@ type AppDeploy struct {
 	Detach         bool   `json:"detach"`
 	Message        string `json:"message,omitempty"`
 	ShipaYaml      string `json:"shipaYaml,omitempty" terraform:"shipa_yaml"`
-	Origin         string `json:"shipaYaml,omitempty"`
+	Origin         string `json:"origin,omitempty"`
 }
 
 // AppDeployRequest represents the JSON body that deploy /app expects

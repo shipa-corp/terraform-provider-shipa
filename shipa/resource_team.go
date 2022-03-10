@@ -30,11 +30,9 @@ var (
 						Type: schema.TypeString,
 					},
 				},
-
 			},
 		},
 	}
-
 )
 
 func resourceTeam() *schema.Resource {
@@ -116,7 +114,6 @@ func resourceTeamUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	if newName != "" {
 		updateReq.Name = newName
 	}
-
 
 	c := m.(*client.Client)
 	err := c.UpdateTeam(name, updateReq)

@@ -64,11 +64,9 @@ var (
 					Type:     schema.TypeBool,
 					Optional: true,
 				},
-
 			},
 		},
 	}
-
 )
 
 func resourcePlan() *schema.Resource {

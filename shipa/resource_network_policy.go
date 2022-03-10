@@ -27,7 +27,6 @@ var (
 			},
 		},
 	}
-
 )
 
 func resourceNetworkPolicy() *schema.Resource {
@@ -149,7 +148,7 @@ func resourceNetworkPolicyDelete(ctx context.Context, d *schema.ResourceData, m 
 
 func convertNetworkPolicyToRawData(app string, p *client.NetworkPolicy) []interface{} {
 	raw := map[string]interface{}{
-		"app":        app,
+		"app":            app,
 		"network_policy": helper.StructToTerraform(p),
 	}
 	return []interface{}{raw}

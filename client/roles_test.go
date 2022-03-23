@@ -55,7 +55,7 @@ func TestClient_AssociateRoleToUser(t *testing.T) {
 }
 
 func TestClient_DisassociateRoleFromUser(t *testing.T) {
-	payload := Email{Email: "shipa.io"}
+	payload := Email{Email: "user@shipa.io"}
 	client, teardown := setupServer(
 		clientest.CheckPayloadHandler("/"+apiRoleUser("role")+"/user@shipa.io", payload, http.MethodDelete),
 	)

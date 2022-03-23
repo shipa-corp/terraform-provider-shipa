@@ -96,7 +96,6 @@ func TestClient_DeployApp(t *testing.T) {
 			if request.Method != http.MethodPost {
 				panic(fmt.Errorf("method doesn't match, want %s, got %s", http.MethodPost, request.Method))
 			}
-			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 		}),
 	)

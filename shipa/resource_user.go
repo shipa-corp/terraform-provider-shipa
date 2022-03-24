@@ -21,10 +21,10 @@ func resourceUser() *schema.Resource {
 				ForceNew: true,
 			},
 			"password": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
 				Sensitive: true,
-				ForceNew: true,
+				ForceNew:  true,
 			},
 		},
 		Importer: &schema.ResourceImporter{
@@ -38,7 +38,7 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, m interface
 	var diags diag.Diagnostics
 
 	req := &client.User{
-		Email: d.Get("email").(string),
+		Email:    d.Get("email").(string),
 		Password: d.Get("password").(string),
 	}
 

@@ -131,7 +131,7 @@ func (c *Client) CreateCluster(req *CreateClusterRequest) error {
 }
 
 func (c *Client) UpdateCluster(req *CreateClusterRequest) error {
-	return c.put(req, apiClusters, req.Name)
+	return c.put(req, apiClusters, req.Name, "config")
 }
 
 func (c *Client) DeleteCluster(name string) error {

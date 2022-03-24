@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "hashicorp.terraform",
+        "golang.go",
+        "streetsidesoftware.code-spell-checker",
+        "davidanson.vscode-markdownlint",
+        "VisualStudioExptTeam.vscodeintellicode"
+    ]
+}

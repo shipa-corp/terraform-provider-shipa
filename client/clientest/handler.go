@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 )
 
 type Handler struct {
@@ -36,7 +35,6 @@ func PrintJsonHandler(endpoint string, payload interface{}, wantMethod string) H
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
 		if _, err := w.Write(data); err != nil {
@@ -55,47 +53,17 @@ func CheckPayloadHandler(endpoint string, wantPayload interface{}, wantMethod st
 		if request.Method != wantMethod {
 			panic(fmt.Errorf("method doesn't match, want %s, got %s", wantMethod, request.Method))
 		}
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 	})
 }
 
 func checkPayload(request *http.Request, wantPayload interface{}) error {
-	if request.Header.Get("Content-Type") == "application/json" {
-		body, err := ioutil.ReadAll(request.Body)
-		if err != nil {
-			return err
-		}
-		if err = checkJson(wantPayload, body); err != nil {
-			return err
-		}
-	}
-	if request.Header.Get("Content-Type") == "application/x-www-form-urlencoded" {
-		if err := request.ParseForm(); err != nil {
-			return err
-		}
-
-		if err := checkForm(wantPayload, request.Form); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func checkForm(payload interface{}, body url.Values) error {
-	want, err := json.Marshal(payload)
+	body, err := ioutil.ReadAll(request.Body)
 	if err != nil {
 		return err
 	}
-	got, err := json.Marshal(body)
-	if err != nil {
+	if err = checkJson(wantPayload, body); err != nil {
 		return err
-	}
-
-	wantJson := string(want)
-	gotJson := string(got)
-	if wantJson != gotJson {
-		return fmt.Errorf("payload doesn't match, want %s, got %s", wantJson, gotJson)
 	}
 	return nil
 }

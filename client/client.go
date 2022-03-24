@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 )
@@ -123,6 +122,7 @@ func (c *Client) doRequest(req *http.Request) ([]byte, int, error) {
 			return nil, 0, err
 		}
 	}
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.Token)
 
@@ -187,19 +187,6 @@ func (c *Client) get(out interface{}, urlPath ...string) error {
 	}
 	log.Println("JSON unmarshal:", string(body))
 	return json.Unmarshal(body, out)
-}
-
-func (c *Client) newURLEncodedRequest(method string, params map[string]string, urlPath ...string) (*http.Request, error) {
-	URL := strings.Join(append([]string{c.HostURL}, urlPath...), "/")
-	log.Printf("> %s: %s\n", method, URL)
-
-	data := url.Values{}
-	for key, val := range params {
-		data.Set(key, val)
-	}
-
-	//r.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
-	return http.NewRequest(method, URL, strings.NewReader(data.Encode())) // URL-encoded payload
 }
 
 func (c *Client) newRequest(method string, payload interface{}, urlPath ...string) (*http.Request, error) {
@@ -282,35 +269,12 @@ func (c *Client) updateRequest(method string, payload interface{}, urlPath ...st
 	if err != nil {
 		return nil, 0, err
 	}
-	req.Header.Set("Content-Type", "application/json")
-
-	return c.doRequest(req)
-}
-
-func (c *Client) updateURLEncodedRequest(method string, params map[string]string, urlPath ...string) ([]byte, int, error) {
-	req, err := c.newURLEncodedRequest(method, params, urlPath...)
-	if err != nil {
-		return nil, 0, err
-	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	return c.doRequest(req)
 }
 
 func (c *Client) post(payload interface{}, urlPath ...string) error {
 	body, statusCode, err := c.updateRequest(http.MethodPost, payload, urlPath...)
-	if err != nil {
-		return err
-	}
-
-	if statusCode != http.StatusCreated && statusCode != http.StatusOK {
-		return ErrStatus(statusCode, body)
-	}
-	return nil
-}
-
-func (c *Client) postURLEncoded(params map[string]string, urlPath ...string) error {
-	body, statusCode, err := c.updateURLEncodedRequest(http.MethodPost, params, urlPath...)
 	if err != nil {
 		return err
 	}

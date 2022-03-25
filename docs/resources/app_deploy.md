@@ -17,30 +17,33 @@ description: |-
 
 ### Required
 
-- **app** (String)
-- **deploy** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--deploy))
+- `app` (String)
+- `deploy` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--deploy))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--deploy"></a>
 ### Nested Schema for `deploy`
 
 Required:
 
-- **image** (String)
+- `image` (String)
 
 Optional:
 
-- **detach** (Boolean)
-- **message** (String)
-- **port** (Number)
-- **private_image** (Boolean)
-- **registry_secret** (String)
-- **registry_user** (String)
-- **step_interval** (Number)
-- **step_weight** (Number)
-- **steps** (Number)
+- `detach` (Boolean)
+- `message` (String)
+- `origin` (String)
+- `port` (Number)
+- `private_image` (Boolean)
+- `protocol` (String)
+- `registry_secret` (String)
+- `registry_user` (String)
+- `shipa_yaml` (String)
+- `step_interval` (Number)
+- `step_weight` (Number)
+- `steps` (Number)
 
 

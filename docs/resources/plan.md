@@ -17,27 +17,27 @@ description: |-
 
 ### Required
 
-- **plan** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--plan))
+- `plan` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--plan))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--plan"></a>
 ### Nested Schema for `plan`
 
 Required:
 
-- **cpushare** (Number)
-- **memory** (Number)
-- **name** (String)
-- **swap** (Number)
-- **teams** (List of String)
+- `cpushare` (Number)
+- `memory` (Number)
+- `name` (String)
+- `swap` (Number)
+- `teams` (List of String)
 
 Optional:
 
-- **default** (Boolean)
-- **org** (String)
-- **public** (Boolean)
+- `default` (Boolean)
+- `org` (String)
+- `public` (Boolean)
 
 

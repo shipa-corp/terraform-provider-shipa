@@ -17,12 +17,12 @@ description: |-
 
 ### Required
 
-- **app** (String)
-- **cname** (String)
+- `app` (String)
+- `cname` (String)
 
 ### Optional
 
-- **encrypt** (Boolean)
-- **id** (String) The ID of this resource.
+- `encrypt` (Boolean)
+- `id` (String) The ID of this resource.
 
 

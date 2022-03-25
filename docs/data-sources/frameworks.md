@@ -17,31 +17,31 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 ### Read-Only
 
-- **frameworks** (List of Object) (see [below for nested schema](#nestedatt--frameworks))
+- `frameworks` (List of Object) (see [below for nested schema](#nestedatt--frameworks))
 
 <a id="nestedatt--frameworks"></a>
 ### Nested Schema for `frameworks`
 
 Read-Only:
 
-- **allowed** (List of Object) (see [below for nested schema](#nestedobjatt--frameworks--allowed))
-- **default** (Boolean)
-- **name** (String)
-- **provisioner** (String)
-- **public** (Boolean)
-- **teams** (List of String)
+- `allowed` (List of Object) (see [below for nested schema](#nestedobjatt--frameworks--allowed))
+- `default` (Boolean)
+- `name` (String)
+- `provisioner` (String)
+- `public` (Boolean)
+- `teams` (List of String)
 
 <a id="nestedobjatt--frameworks--allowed"></a>
 ### Nested Schema for `frameworks.allowed`
 
 Read-Only:
 
-- **driver** (List of String)
-- **plan** (List of String)
-- **team** (List of String)
+- `driver` (List of String)
+- `plan` (List of String)
+- `team` (List of String)
 
 

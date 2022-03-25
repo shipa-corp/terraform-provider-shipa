@@ -17,55 +17,58 @@ description: |-
 
 ### Required
 
-- **framework** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--framework))
+- `framework` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--framework))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--framework"></a>
 ### Nested Schema for `framework`
 
 Required:
 
-- **name** (String)
-- **provisioner** (String)
+- `name` (String)
+- `provisioner` (String)
 
 Optional:
 
-- **resources** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources))
+- `resources` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources))
 
 <a id="nestedblock--framework--resources"></a>
 ### Nested Schema for `framework.resources`
 
 Optional:
 
-- **general** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general))
-- **shipa_node** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--shipa_node))
+- `general` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general))
+- `shipa_node` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--shipa_node))
 
 <a id="nestedblock--framework--resources--general"></a>
 ### Nested Schema for `framework.resources.general`
 
 Optional:
 
-- **access** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--access))
-- **app_quota** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--app_quota))
-- **container_policy** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--container_policy))
-- **network_policy** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--network_policy))
-- **plan** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--plan))
-- **router** (String)
-- **security** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--security))
-- **services** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--services))
-- **setup** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--setup))
-- **volumes** (List of String)
+- `access` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--access))
+- `app_quota` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--app_quota))
+- `container_policy` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--container_policy))
+- `domain_policy` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--domain_policy))
+- `network_policy` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--network_policy))
+- `node_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--node_selector))
+- `plan` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--plan))
+- `pod_auto_scaler` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--pod_auto_scaler))
+- `router` (String)
+- `security` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--security))
+- `services` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--services))
+- `setup` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--setup))
+- `volumes` (List of String)
 
 <a id="nestedblock--framework--resources--general--access"></a>
 ### Nested Schema for `framework.resources.general.volumes`
 
 Optional:
 
-- **append** (List of String)
-- **blacklist** (List of String)
+- `append` (List of String)
+- `blacklist` (List of String)
 
 
 <a id="nestedblock--framework--resources--general--app_quota"></a>
@@ -73,7 +76,7 @@ Optional:
 
 Optional:
 
-- **limit** (String)
+- `limit` (String)
 
 
 <a id="nestedblock--framework--resources--general--container_policy"></a>
@@ -81,7 +84,15 @@ Optional:
 
 Optional:
 
-- **allowed_hosts** (List of String)
+- `allowed_hosts` (List of String)
+
+
+<a id="nestedblock--framework--resources--general--domain_policy"></a>
+### Nested Schema for `framework.resources.general.volumes`
+
+Optional:
+
+- `allowed_cnames` (List of String)
 
 
 <a id="nestedblock--framework--resources--general--network_policy"></a>
@@ -89,58 +100,58 @@ Optional:
 
 Optional:
 
-- **disable_app_policies** (Boolean)
-- **egress** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress))
-- **ingress** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress))
+- `disable_app_policies` (Boolean)
+- `egress` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress))
+- `ingress` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress))
 
 <a id="nestedblock--framework--resources--general--volumes--egress"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress`
 
 Optional:
 
-- **custom_rules** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--custom_rules))
-- **policy_mode** (String)
-- **shipa_rules** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules))
-- **shipa_rules_enabled** (List of String)
+- `custom_rules` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--custom_rules))
+- `policy_mode` (String)
+- `shipa_rules` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules))
+- `shipa_rules_enabled` (List of String)
 
 <a id="nestedblock--framework--resources--general--volumes--egress--custom_rules"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled`
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector))
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -149,17 +160,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -169,8 +180,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -179,39 +190,39 @@ Optional:
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector))
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--namespace_selector"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -220,17 +231,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--egress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.egress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -240,8 +251,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -251,49 +262,49 @@ Optional:
 
 Optional:
 
-- **custom_rules** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--custom_rules))
-- **policy_mode** (String)
-- **shipa_rules** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules))
-- **shipa_rules_enabled** (List of String)
+- `custom_rules` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--custom_rules))
+- `policy_mode` (String)
+- `shipa_rules` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules))
+- `shipa_rules_enabled` (List of String)
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--custom_rules"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled`
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector))
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -302,17 +313,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -322,8 +333,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -332,39 +343,39 @@ Optional:
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector))
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--namespace_selector"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -373,17 +384,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--framework--resources--general--volumes--ingress--shipa_rules_enabled--ports--pod_selector--match_expressions"></a>
 ### Nested Schema for `framework.resources.general.volumes.ingress.shipa_rules_enabled.ports.pod_selector.match_expressions`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -393,11 +404,23 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
+
+
+<a id="nestedblock--framework--resources--general--node_selector"></a>
+### Nested Schema for `framework.resources.general.volumes`
+
+Required:
+
+- `terms` (Map of String)
+
+Optional:
+
+- `strict` (Boolean)
 
 
 <a id="nestedblock--framework--resources--general--plan"></a>
@@ -405,7 +428,21 @@ Optional:
 
 Optional:
 
-- **name** (String)
+- `name` (String)
+
+
+<a id="nestedblock--framework--resources--general--pod_auto_scaler"></a>
+### Nested Schema for `framework.resources.general.volumes`
+
+Required:
+
+- `max_replicas` (Number)
+- `min_replicas` (Number)
+- `target_cpu_utilization_percentage` (Number)
+
+Optional:
+
+- `disable_app_override` (Boolean)
 
 
 <a id="nestedblock--framework--resources--general--security"></a>
@@ -413,10 +450,10 @@ Optional:
 
 Optional:
 
-- **disable_scan** (Boolean)
-- **ignore_components** (List of String)
-- **ignore_cves** (List of String)
-- **scan_platform_layers** (Boolean)
+- `disable_scan` (Boolean)
+- `ignore_components` (List of String)
+- `ignore_cves` (List of String)
+- `scan_platform_layers` (Boolean)
 
 
 <a id="nestedblock--framework--resources--general--services"></a>
@@ -424,8 +461,8 @@ Optional:
 
 Optional:
 
-- **append** (List of String)
-- **blacklist** (List of String)
+- `append` (List of String)
+- `blacklist` (List of String)
 
 
 <a id="nestedblock--framework--resources--general--setup"></a>
@@ -433,10 +470,10 @@ Optional:
 
 Optional:
 
-- **default** (Boolean)
-- **kubernetes_namespace** (String)
-- **provisioner** (String)
-- **public** (Boolean)
+- `default` (Boolean)
+- `kubernetes_namespace` (String)
+- `provisioner` (String)
+- `public` (Boolean)
 
 
 
@@ -445,17 +482,17 @@ Optional:
 
 Optional:
 
-- **auto_scale** (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--shipa_node--auto_scale))
-- **drivers** (List of String)
+- `auto_scale` (Block List, Max: 1) (see [below for nested schema](#nestedblock--framework--resources--shipa_node--auto_scale))
+- `drivers` (List of String)
 
 <a id="nestedblock--framework--resources--shipa_node--auto_scale"></a>
 ### Nested Schema for `framework.resources.shipa_node.drivers`
 
 Optional:
 
-- **max_container** (Number)
-- **max_memory** (Number)
-- **rebalance** (Boolean)
-- **scale_down** (Number)
+- `max_container` (Number)
+- `max_memory` (Number)
+- `rebalance` (Boolean)
+- `scale_down` (Number)
 
 

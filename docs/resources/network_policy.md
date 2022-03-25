@@ -17,80 +17,80 @@ description: |-
 
 ### Required
 
-- **network_policy** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--network_policy))
+- `network_policy` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--network_policy))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--network_policy"></a>
 ### Nested Schema for `network_policy`
 
 Required:
 
-- **app** (String)
+- `app` (String)
 
 Optional:
 
-- **network_policy** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy))
+- `network_policy` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy))
 
 <a id="nestedblock--network_policy--network_policy"></a>
 ### Nested Schema for `network_policy.network_policy`
 
 Optional:
 
-- **egress** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress))
-- **ingress** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress))
-- **restart_app** (Boolean)
+- `egress` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress))
+- `ingress` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress))
+- `restart_app` (Boolean)
 
 <a id="nestedblock--network_policy--network_policy--egress"></a>
 ### Nested Schema for `network_policy.network_policy.egress`
 
 Optional:
 
-- **custom_rules** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--custom_rules))
-- **policy_mode** (String)
-- **shipa_rules** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules))
-- **shipa_rules_enabled** (List of String)
+- `custom_rules` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--custom_rules))
+- `policy_mode` (String)
+- `shipa_rules` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules))
+- `shipa_rules_enabled` (List of String)
 
 <a id="nestedblock--network_policy--network_policy--egress--custom_rules"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled`
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector))
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -99,17 +99,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -119,8 +119,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -129,39 +129,39 @@ Optional:
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector))
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--namespace_selector"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -170,17 +170,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--egress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.egress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -190,8 +190,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -201,49 +201,49 @@ Optional:
 
 Optional:
 
-- **custom_rules** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--custom_rules))
-- **policy_mode** (String)
-- **shipa_rules** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules))
-- **shipa_rules_enabled** (List of String)
+- `custom_rules` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--custom_rules))
+- `policy_mode` (String)
+- `shipa_rules` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules))
+- `shipa_rules_enabled` (List of String)
 
 <a id="nestedblock--network_policy--network_policy--ingress--custom_rules"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled`
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector))
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -252,17 +252,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -272,8 +272,8 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 
 
@@ -282,39 +282,39 @@ Optional:
 
 Optional:
 
-- **allowed_apps** (List of String)
-- **allowed_frameworks** (List of String)
-- **description** (String)
-- **enabled** (Boolean)
-- **id** (String) The ID of this resource.
-- **peers** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers))
-- **ports** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--ports))
+- `allowed_apps` (List of String)
+- `allowed_frameworks` (List of String)
+- `description` (String)
+- `enabled` (Boolean)
+- `id` (String) The ID of this resource.
+- `peers` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers))
+- `ports` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--ports))
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers`
 
 Optional:
 
-- **ip_block** (List of String)
-- **namespace_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector))
-- **pod_selector** (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector))
+- `ip_block` (List of String)
+- `namespace_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector))
+- `pod_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector))
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--namespace_selector"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector`
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -323,17 +323,17 @@ Optional:
 
 Optional:
 
-- **match_expressions** (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
-- **match_labels** (Map of String)
+- `match_expressions` (Block List) (see [below for nested schema](#nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions))
+- `match_labels` (Map of String)
 
 <a id="nestedblock--network_policy--network_policy--ingress--shipa_rules_enabled--peers--pod_selector--match_expressions"></a>
 ### Nested Schema for `network_policy.network_policy.ingress.shipa_rules_enabled.peers.pod_selector.match_labels`
 
 Optional:
 
-- **key** (String)
-- **operator** (String)
-- **values** (List of String)
+- `key` (String)
+- `operator` (String)
+- `values` (List of String)
 
 
 
@@ -343,7 +343,7 @@ Optional:
 
 Optional:
 
-- **port** (Number)
-- **protocol** (String)
+- `port` (Number)
+- `protocol` (String)
 
 

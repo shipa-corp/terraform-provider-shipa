@@ -17,11 +17,11 @@ description: |-
 
 ### Required
 
-- **name** (String)
-- **permission** (List of String)
+- `name` (String)
+- `permission` (List of String)
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 

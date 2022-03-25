@@ -17,11 +17,11 @@ description: |-
 
 ### Required
 
-- **email** (String)
-- **password** (String, Sensitive)
+- `email` (String)
+- `password` (String, Sensitive)
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 

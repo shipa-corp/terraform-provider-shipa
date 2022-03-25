@@ -17,21 +17,21 @@ description: |-
 
 ### Required
 
-- **team** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--team))
+- `team` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--team))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--team"></a>
 ### Nested Schema for `team`
 
 Required:
 
-- **name** (String)
+- `name` (String)
 
 Optional:
 
-- **tags** (List of String)
+- `tags` (List of String)
 
 

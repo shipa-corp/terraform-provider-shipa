@@ -17,12 +17,12 @@ description: |-
 
 ### Required
 
-- **context** (String)
-- **name** (String)
+- `context` (String)
+- `name` (String)
 
 ### Optional
 
-- **description** (String)
-- **id** (String) The ID of this resource.
+- `description` (String)
+- `id` (String) The ID of this resource.
 
 

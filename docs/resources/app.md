@@ -17,46 +17,46 @@ description: |-
 
 ### Required
 
-- **app** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--app))
+- `app` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--app))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--app"></a>
 ### Nested Schema for `app`
 
 Required:
 
-- **name** (String)
-- **pool** (String)
-- **teamowner** (String)
+- `framework` (String)
+- `name` (String)
+- `teamowner` (String)
 
 Optional:
 
-- **description** (String)
-- **platform** (String)
-- **tags** (List of String)
+- `description` (String)
+- `platform` (String)
+- `tags` (List of String)
 
 Read-Only:
 
-- **entrypoints** (List of Object) (see [below for nested schema](#nestedatt--app--entrypoints))
-- **error** (String)
-- **ip** (String)
-- **lock** (List of Object) (see [below for nested schema](#nestedatt--app--lock))
-- **org** (String)
-- **plan** (List of Object) (see [below for nested schema](#nestedatt--app--plan))
-- **routers** (List of Object) (see [below for nested schema](#nestedatt--app--routers))
-- **status** (String)
-- **units** (List of Object) (see [below for nested schema](#nestedatt--app--units))
+- `entrypoints` (List of Object) (see [below for nested schema](#nestedatt--app--entrypoints))
+- `error` (String)
+- `ip` (String)
+- `lock` (List of Object) (see [below for nested schema](#nestedatt--app--lock))
+- `org` (String)
+- `plan` (List of Object) (see [below for nested schema](#nestedatt--app--plan))
+- `routers` (List of Object) (see [below for nested schema](#nestedatt--app--routers))
+- `status` (String)
+- `units` (List of Object) (see [below for nested schema](#nestedatt--app--units))
 
 <a id="nestedatt--app--entrypoints"></a>
 ### Nested Schema for `app.entrypoints`
 
 Read-Only:
 
-- **cname** (String)
-- **scheme** (String)
+- `cname` (String)
+- `scheme` (String)
 
 
 <a id="nestedatt--app--lock"></a>
@@ -64,10 +64,10 @@ Read-Only:
 
 Read-Only:
 
-- **acquire_date** (String)
-- **locked** (Boolean)
-- **owner** (String)
-- **reason** (String)
+- `acquire_date` (String)
+- `locked` (Boolean)
+- `owner` (String)
+- `reason` (String)
 
 
 <a id="nestedatt--app--plan"></a>
@@ -75,14 +75,14 @@ Read-Only:
 
 Read-Only:
 
-- **cpushare** (Number)
-- **default** (Boolean)
-- **memory** (Number)
-- **name** (String)
-- **org** (String)
-- **public** (Boolean)
-- **swap** (Number)
-- **teams** (List of String)
+- `cpushare` (Number)
+- `default` (Boolean)
+- `memory` (Number)
+- `name` (String)
+- `org` (String)
+- `public` (Boolean)
+- `swap` (Number)
+- `teams` (List of String)
 
 
 <a id="nestedatt--app--routers"></a>
@@ -90,11 +90,11 @@ Read-Only:
 
 Read-Only:
 
-- **address** (String)
-- **default** (Boolean)
-- **name** (String)
-- **opts** (Map of String)
-- **type** (String)
+- `address` (String)
+- `default` (Boolean)
+- `name` (String)
+- `opts` (Map of String)
+- `type` (String)
 
 
 <a id="nestedatt--app--units"></a>
@@ -102,33 +102,33 @@ Read-Only:
 
 Read-Only:
 
-- **address** (List of Object) (see [below for nested schema](#nestedobjatt--app--units--address))
-- **app_name** (String)
-- **host_addr** (String)
-- **host_port** (String)
-- **id** (String)
-- **ip** (String)
-- **name** (String)
-- **org** (String)
-- **process_name** (String)
-- **status** (String)
-- **type** (String)
-- **version** (String)
+- `address` (List of Object) (see [below for nested schema](#nestedobjatt--app--units--address))
+- `app_name` (String)
+- `host_addr` (String)
+- `host_port` (String)
+- `id` (String)
+- `ip` (String)
+- `name` (String)
+- `org` (String)
+- `process_name` (String)
+- `status` (String)
+- `type` (String)
+- `version` (String)
 
 <a id="nestedobjatt--app--units--address"></a>
 ### Nested Schema for `app.units.address`
 
 Read-Only:
 
-- **force_query** (Boolean)
-- **fragment** (String)
-- **host** (String)
-- **opaque** (String)
-- **path** (String)
-- **raw_fragment** (String)
-- **raw_path** (String)
-- **raw_query** (String)
-- **scheme** (String)
-- **user** (String)
+- `force_query` (Boolean)
+- `fragment` (String)
+- `host` (String)
+- `opaque` (String)
+- `path` (String)
+- `raw_fragment` (String)
+- `raw_path` (String)
+- `raw_query` (String)
+- `scheme` (String)
+- `user` (String)
 
 

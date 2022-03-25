@@ -17,36 +17,36 @@ description: |-
 
 ### Required
 
-- **cluster** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster))
+- `cluster` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--cluster"></a>
 ### Nested Schema for `cluster`
 
 Required:
 
-- **endpoint** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster--endpoint))
-- **name** (String)
-- **resources** (Block List, Min: 1) (see [below for nested schema](#nestedblock--cluster--resources))
+- `endpoint` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster--endpoint))
+- `name` (String)
+- `resources` (Block List, Min: 1) (see [below for nested schema](#nestedblock--cluster--resources))
 
 <a id="nestedblock--cluster--endpoint"></a>
 ### Nested Schema for `cluster.endpoint`
 
 Required:
 
-- **addresses** (List of String)
-- **ca_cert** (String)
+- `addresses` (List of String)
+- `ca_cert` (String)
 
 Optional:
 
-- **client_cert** (String)
-- **client_key** (String)
-- **password** (String, Sensitive)
-- **token** (String, Sensitive)
-- **username** (String)
+- `client_cert` (String)
+- `client_key` (String)
+- `password` (String, Sensitive)
+- `token` (String, Sensitive)
+- `username` (String)
 
 
 <a id="nestedblock--cluster--resources"></a>
@@ -54,18 +54,18 @@ Optional:
 
 Required:
 
-- **frameworks** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster--resources--frameworks))
+- `frameworks` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--cluster--resources--frameworks))
 
 Optional:
 
-- **ingress_controllers** (Block List) (see [below for nested schema](#nestedblock--cluster--resources--ingress_controllers))
+- `ingress_controllers` (Block List) (see [below for nested schema](#nestedblock--cluster--resources--ingress_controllers))
 
 <a id="nestedblock--cluster--resources--frameworks"></a>
 ### Nested Schema for `cluster.resources.frameworks`
 
 Required:
 
-- **name** (List of String)
+- `name` (List of String)
 
 
 <a id="nestedblock--cluster--resources--ingress_controllers"></a>
@@ -73,14 +73,14 @@ Required:
 
 Optional:
 
-- **acme_email** (String)
-- **acme_server** (String)
-- **debug** (Boolean)
-- **http_port** (Number)
-- **https_port** (Number)
-- **ingress_ip** (String)
-- **protected_port** (Number)
-- **service_type** (String)
-- **type** (String)
+- `acme_email` (String)
+- `acme_server` (String)
+- `debug` (Boolean)
+- `http_port` (Number)
+- `https_port` (Number)
+- `ingress_ip` (String)
+- `protected_port` (Number)
+- `service_type` (String)
+- `type` (String)
 
 

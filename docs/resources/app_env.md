@@ -17,31 +17,31 @@ description: |-
 
 ### Required
 
-- **app** (String)
-- **app_env** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--app_env))
+- `app` (String)
+- `app_env` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--app_env))
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--app_env"></a>
 ### Nested Schema for `app_env`
 
 Required:
 
-- **envs** (Block List, Min: 1) (see [below for nested schema](#nestedblock--app_env--envs))
+- `envs` (Block List, Min: 1) (see [below for nested schema](#nestedblock--app_env--envs))
 
 Optional:
 
-- **norestart** (Boolean)
-- **private** (Boolean)
+- `norestart` (Boolean)
+- `private` (Boolean)
 
 <a id="nestedblock--app_env--envs"></a>
 ### Nested Schema for `app_env.envs`
 
 Required:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 

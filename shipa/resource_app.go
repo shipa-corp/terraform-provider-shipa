@@ -86,10 +86,11 @@ var (
 
 func resourceApp() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceAppCreate,
-		ReadContext:   resourceAppRead,
-		UpdateContext: resourceAppUpdate,
-		DeleteContext: resourceAppDelete,
+		DeprecationMessage: "You should no longer use the app resource directly. Instead you should use the shipa_app_deploy resource which now handles app creation as well.",
+		CreateContext:      resourceAppCreate,
+		ReadContext:        resourceAppRead,
+		UpdateContext:      resourceAppUpdate,
+		DeleteContext:      resourceAppDelete,
 		Schema: map[string]*schema.Schema{
 			"app": schemaApp,
 		},

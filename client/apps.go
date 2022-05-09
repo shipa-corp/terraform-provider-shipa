@@ -201,23 +201,32 @@ func (c *Client) DeleteAppCname(appName string, req *AppCnames) error {
 }
 
 type AppDeploy struct {
-	Image          string `json:"image"`
-	PrivateImage   bool   `json:"private-image,omitempty" terraform:"private_image"`
-	RegistryUser   string `json:"registry-user,omitempty" terraform:"registry_user"`
-	RegistrySecret string `json:"registry-secret,omitempty" terraform:"registry_secret"`
-	Steps          int64  `json:"steps,omitempty"`
-	StepWeight     int64  `json:"step-weight,omitempty" terraform:"step_weight"`
-	StepInterval   int64  `json:"step-interval,omitempty" terraform:"step_interval"`
-	Port           int64  `json:"port,omitempty"`
-	Protocol       string `json:"protocol,omitempty"`
-	Detach         bool   `json:"detach"`
-	Message        string `json:"message,omitempty"`
-	ShipaYaml      string `json:"shipaYaml,omitempty" terraform:"shipa_yaml"`
-	Origin         string `json:"origin,omitempty"`
+	Image          string   `json:"image"`
+	PrivateImage   bool     `json:"private-image,omitempty" terraform:"private_image"`
+	RegistryUser   string   `json:"registry-user,omitempty" terraform:"registry_user"`
+	RegistrySecret string   `json:"registry-secret,omitempty" terraform:"registry_secret"`
+	Framework      string   `json:"framework,omitempty"`
+	Plan           string   `json:"plan,omitempty"`
+	Team           string   `json:"teamowner,omitempty"`
+	Description    string   `json:"description,omitempty"`
+	Router         string   `json:"router,omitempty"`
+	Tags           []string `json:"tags,omitempty"`
+	Env            []string `json:"env,omitempty"`
+	DependencyFile []string `json:"dependencyFile,omitempty"`
+	Steps          int64    `json:"steps,omitempty"`
+	StepWeight     int64    `json:"step-weight,omitempty" terraform:"step_weight"`
+	StepInterval   int64    `json:"step-interval,omitempty" terraform:"step_interval"`
+	Port           int64    `json:"port,omitempty"`
+	Protocol       string   `json:"protocol,omitempty"`
+	Detach         bool     `json:"detach"`
+	Message        string   `json:"message,omitempty"`
+	ShipaYaml      string   `json:"shipaYaml,omitempty" terraform:"shipa_yaml"`
+	Origin         string   `json:"origin,omitempty"`
 }
 
 // AppDeployRequest represents the JSON body that deploy /app expects
 type AppDeployRequest struct {
+	AppConfig      *AppConfig      `json:"appConfig,omitempty"`
 	Image          string          `json:"image"`
 	Port           *Port           `json:"port,omitempty"`
 	Detach         bool            `json:"detach"`
@@ -226,6 +235,18 @@ type AppDeployRequest struct {
 	Origin         string          `json:"origin,omitempty"`
 	CanarySettings *CanarySettings `json:"canarySettings,omitempty"`
 	ShipaYaml      string          `json:"shipaYaml,omitempty"`
+}
+
+// AppConfig represents the JSON body that deploy /app expects
+type AppConfig struct {
+	Framework      string   `json:"framework"`
+	Plan           string   `json:"plan"`
+	Team           string   `json:"team"`
+	Description    string   `json:"description"`
+	Router         string   `json:"router"`
+	Tags           []string `json:"tags,omitempty"`
+	Env            []string `json:"env,omitempty"`
+	DependencyFile []string `json:"dependencyFile,omitempty"`
 }
 
 // Registry represents the JSON body that deploy /app expects
@@ -259,7 +280,9 @@ func (c *Client) DeployApp(appName string, req *AppDeploy) error {
 }
 
 func getAppDeployRequest(req *AppDeploy) *AppDeployRequest {
-	return &AppDeployRequest{
+	var appConfig AppConfig
+
+	payload := &AppDeployRequest{
 		Image: req.Image,
 		Port: &Port{
 			Number:   int(req.Port),
@@ -280,4 +303,18 @@ func getAppDeployRequest(req *AppDeploy) *AppDeployRequest {
 		ShipaYaml: req.ShipaYaml,
 	}
 
+	if req.Framework != "" || req.Plan != "" || req.Team != "" || req.Description != "" || req.Tags != nil || req.Env != nil || req.DependencyFile != nil {
+		appConfig = AppConfig{
+			Framework:      req.Framework,
+			Plan:           req.Plan,
+			Team:           req.Team,
+			Description:    req.Description,
+			Tags:           req.Tags,
+			Env:            req.Env,
+			DependencyFile: req.DependencyFile,
+		}
+		payload.AppConfig = &appConfig
+	}
+
+	return payload
 }

@@ -3,6 +3,7 @@ package shipa
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -40,6 +41,51 @@ var (
 					Type:         schema.TypeString,
 					Optional:     true,
 					RequiredWith: []string{"deploy.0.private_image"},
+				},
+				"framework": {
+					Type:         schema.TypeString,
+					Optional:     true, // This _should_ be required in the future, but can't be yet if we are to be backward compatible
+					RequiredWith: []string{"deploy.0.team"},
+				},
+				"team": {
+					Type:         schema.TypeString,
+					Optional:     true, // This _should_ be required in the future, but can't be yet if we are to be backward compatible
+					RequiredWith: []string{"deploy.0.framework"},
+				},
+				"plan": {
+					Type:         planSchema.Type,
+					Elem:         planSchema.Elem,
+					Computed:     true,
+					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+				},
+				"description": {
+					Type:         schema.TypeString,
+					Optional:     true,
+					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+				},
+				"router": {
+					Type:         routersSchema.Type,
+					Elem:         routersSchema.Elem,
+					Computed:     true,
+					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+				},
+				"tags": {
+					Type:     schema.TypeList,
+					Optional: true,
+					Elem: &schema.Schema{
+						Type:         schema.TypeString,
+						ValidateFunc: validation.StringIsNotEmpty,
+					},
+					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+				},
+				"env": {
+					Type:     schema.TypeList,
+					Optional: true,
+					Elem: &schema.Schema{
+						Type:         schema.TypeString,
+						ValidateFunc: validation.StringMatch(regexp.MustCompile("^[-._a-zA-Z][-._a-zA-Z0-9]*=.*$"), "Invalid environment variable format. A valid environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit, and must be followed by `=` and the desired value."),
+					},
+					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
 				},
 				"steps": {
 					Type:     schema.TypeInt,

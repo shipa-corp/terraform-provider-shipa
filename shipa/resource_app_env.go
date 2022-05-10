@@ -50,10 +50,11 @@ var (
 
 func resourceAppEnv() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceAppEnvCreate,
-		ReadContext:   resourceAppEnvRead,
-		UpdateContext: resourceAppEnvUpdate,
-		DeleteContext: resourceAppEnvDelete,
+		DeprecationMessage: "You should no longer use the app env resource directly. Instead you should use the shipa_app_deploy resource which now handles env config as well.",
+		CreateContext:      resourceAppEnvCreate,
+		ReadContext:        resourceAppEnvRead,
+		UpdateContext:      resourceAppEnvUpdate,
+		DeleteContext:      resourceAppEnvDelete,
 		Schema: map[string]*schema.Schema{
 			"app": {
 				Type:     schema.TypeString,

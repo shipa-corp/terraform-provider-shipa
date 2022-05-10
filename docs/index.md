@@ -25,3 +25,5 @@ or
 - `host` (String)
 - `admin_email` (String, Sensitive)
 - `admin_password` (String, Sensitive)
+
+or have `SHIPA_HOST` and `SHIPA_TOKEN` set as environment variables.

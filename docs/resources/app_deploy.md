@@ -33,7 +33,10 @@ Required:
 
 Optional:
 
+- `description` (String)
 - `detach` (Boolean)
+- `env` (List of String)
+- `framework` (String)
 - `message` (String)
 - `origin` (String)
 - `port` (Number)
@@ -45,5 +48,38 @@ Optional:
 - `step_interval` (Number)
 - `step_weight` (Number)
 - `steps` (Number)
+- `tags` (List of String)
+- `team` (String)
+
+Read-Only:
+
+- `plan` (List of Object) (see [below for nested schema](#nestedatt--deploy--plan))
+- `router` (List of Object) (see [below for nested schema](#nestedatt--deploy--router))
+
+<a id="nestedatt--deploy--plan"></a>
+### Nested Schema for `deploy.plan`
+
+Read-Only:
+
+- `cpushare` (Number)
+- `default` (Boolean)
+- `memory` (Number)
+- `name` (String)
+- `org` (String)
+- `public` (Boolean)
+- `swap` (Number)
+- `teams` (List of String)
+
+
+<a id="nestedatt--deploy--router"></a>
+### Nested Schema for `deploy.router`
+
+Read-Only:
+
+- `address` (String)
+- `default` (Boolean)
+- `name` (String)
+- `opts` (Map of String)
+- `type` (String)
 
 

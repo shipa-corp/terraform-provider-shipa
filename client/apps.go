@@ -207,7 +207,7 @@ type AppDeploy struct {
 	RegistrySecret string   `json:"registry-secret,omitempty" terraform:"registry_secret"`
 	Framework      string   `json:"framework,omitempty"`
 	Plan           string   `json:"plan,omitempty"`
-	Team           string   `json:"teamowner,omitempty"`
+	Team           string   `json:"team,omitempty"`
 	Description    string   `json:"description,omitempty"`
 	Router         string   `json:"router,omitempty"`
 	Tags           []string `json:"tags,omitempty"`

@@ -144,6 +144,9 @@ func resourceAppDeploy() *schema.Resource {
 			},
 			"deploy": schemaAppDeploy,
 		},
+		Timeouts: &schema.ResourceTimeout{
+			Default: schema.DefaultTimeout(10 * time.Minute),
+		},
 	}
 }
 

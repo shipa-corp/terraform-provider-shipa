@@ -46,16 +46,14 @@ func TestClient_CreateCluster(t *testing.T) {
 			Frameworks: []*Framework{
 				{Name: "test-tf-14"},
 			},
-			IngressControllers: []*IngressControllersCreate{
-				{
-					IngressIP:     "",
-					ServiceType:   "LoadBalancer",
-					Type:          "traefik",
-					HTTPPort:      80,
-					HTTPSPort:     443,
-					ProtectedPort: 31567,
-					Debug:         false,
-				},
+			IngressController: &IngressControllerCreate{
+				IngressIP:     "",
+				ServiceType:   "LoadBalancer",
+				Type:          "traefik",
+				HTTPPort:      80,
+				HTTPSPort:     443,
+				ProtectedPort: 31567,
+				Debug:         false,
 			},
 		},
 	}

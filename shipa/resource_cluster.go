@@ -65,8 +65,8 @@ var (
 		Required: true,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
-				"frameworks":          schemaClusterFrameworks,
-				"ingress_controllers": schemaIngressControllersCreate,
+				"frameworks":         schemaClusterFrameworks,
+				"ingress_controller": schemaIngressControllerCreate,
 			},
 		},
 	}
@@ -88,9 +88,10 @@ var (
 		},
 	}
 
-	schemaIngressControllersCreate = &schema.Schema{
+	schemaIngressControllerCreate = &schema.Schema{
 		Type:     schema.TypeList,
 		Optional: true,
+		MaxItems: 1,
 		Elem: &schema.Resource{
 			Schema: map[string]*schema.Schema{
 				"ingress_ip": {

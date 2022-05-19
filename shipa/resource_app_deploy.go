@@ -84,7 +84,7 @@ var (
 					Elem: &schema.Schema{
 						Type:         schema.TypeString,
 						Sensitive:    true,
-						ValidateFunc: validation.StringMatch(regexp.MustCompile("^[-._a-zA-Z][-._a-zA-Z0-9]*=.*$"), "Invalid environment variable format. A valid environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit, and must be followed by `=` and the desired value."),
+						ValidateFunc: validation.StringMatch(regexp.MustCompile("^[-._a-zA-Z][-._a-zA-Z0-9]*="), "Invalid environment variable format. A valid environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit, and must be followed by `=` and the desired value."),
 					},
 					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
 				},

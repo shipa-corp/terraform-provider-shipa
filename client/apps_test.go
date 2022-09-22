@@ -78,7 +78,7 @@ func TestClient_DeployApp(t *testing.T) {
 		RegistryUser:   "steve",
 		RegistrySecret: "secret",
 		Team:           "dev",
-		Framework:      "default",
+		Environment:    "default",
 		Env:            []string{"foo=bar", "boo=baz"},
 	}
 	client, teardown := setupServer(

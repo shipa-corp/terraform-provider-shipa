@@ -205,7 +205,7 @@ type AppDeploy struct {
 	PrivateImage   bool     `json:"private-image,omitempty" terraform:"private_image"`
 	RegistryUser   string   `json:"registry-user,omitempty" terraform:"registry_user"`
 	RegistrySecret string   `json:"registry-secret,omitempty" terraform:"registry_secret"`
-	Framework      string   `json:"framework,omitempty"`
+	Environment    string   `json:"environment,omitempty"`
 	Plan           string   `json:"plan,omitempty"`
 	Team           string   `json:"team,omitempty"`
 	Description    string   `json:"description,omitempty"`
@@ -239,7 +239,7 @@ type AppDeployRequest struct {
 
 // AppConfig represents the JSON body that deploy /app expects
 type AppConfig struct {
-	Framework      string   `json:"framework"`
+	Environment    string   `json:"environment"`
 	Plan           string   `json:"plan"`
 	Team           string   `json:"team"`
 	Description    string   `json:"description"`
@@ -303,9 +303,9 @@ func getAppDeployRequest(req *AppDeploy) *AppDeployRequest {
 		ShipaYaml: req.ShipaYaml,
 	}
 
-	if req.Framework != "" || req.Plan != "" || req.Team != "" || req.Description != "" || req.Tags != nil || req.Env != nil || req.DependencyFile != nil {
+	if req.Environment != "" || req.Plan != "" || req.Team != "" || req.Description != "" || req.Tags != nil || req.Env != nil || req.DependencyFile != nil {
 		appConfig = AppConfig{
-			Framework:      req.Framework,
+			Environment:    req.Environment,
 			Plan:           req.Plan,
 			Team:           req.Team,
 			Description:    req.Description,

@@ -42,7 +42,7 @@ var (
 					Optional:     true,
 					RequiredWith: []string{"deploy.0.private_image"},
 				},
-				"framework": {
+				"environment": {
 					Type:         schema.TypeString,
 					Optional:     true, // This _should_ be required in the future, but can't be yet if we are to be backward compatible
 					RequiredWith: []string{"deploy.0.team"},
@@ -50,24 +50,24 @@ var (
 				"team": {
 					Type:         schema.TypeString,
 					Optional:     true, // This _should_ be required in the future, but can't be yet if we are to be backward compatible
-					RequiredWith: []string{"deploy.0.framework"},
+					RequiredWith: []string{"deploy.0.environment"},
 				},
 				"plan": {
 					Type:         planSchema.Type,
 					Elem:         planSchema.Elem,
 					Computed:     true,
-					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+					RequiredWith: []string{"deploy.0.environment", "deploy.0.team"},
 				},
 				"description": {
 					Type:         schema.TypeString,
 					Optional:     true,
-					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+					RequiredWith: []string{"deploy.0.environment", "deploy.0.team"},
 				},
 				"router": {
 					Type:         routersSchema.Type,
 					Elem:         routersSchema.Elem,
 					Computed:     true,
-					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+					RequiredWith: []string{"deploy.0.environment", "deploy.0.team"},
 				},
 				"tags": {
 					Type:     schema.TypeList,
@@ -76,7 +76,7 @@ var (
 						Type:         schema.TypeString,
 						ValidateFunc: validation.StringIsNotEmpty,
 					},
-					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+					RequiredWith: []string{"deploy.0.environment", "deploy.0.team"},
 				},
 				"env": {
 					Type:     schema.TypeList,
@@ -86,7 +86,7 @@ var (
 						Sensitive:    true,
 						ValidateFunc: validation.StringMatch(regexp.MustCompile("^[-._a-zA-Z][-._a-zA-Z0-9]*="), "Invalid environment variable format. A valid environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit, and must be followed by `=` and the desired value."),
 					},
-					RequiredWith: []string{"deploy.0.framework", "deploy.0.team"},
+					RequiredWith: []string{"deploy.0.environment", "deploy.0.team"},
 				},
 				"steps": {
 					Type:     schema.TypeInt,

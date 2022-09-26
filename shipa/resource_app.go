@@ -28,7 +28,7 @@ var (
 					Type:     schema.TypeString,
 					Required: true,
 				},
-				"framework": {
+				"environment": {
 					Type:     schema.TypeString,
 					Required: true,
 				},

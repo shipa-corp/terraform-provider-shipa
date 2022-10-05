@@ -16,7 +16,6 @@ func NewUpdateAppRequest(a *App) *UpdateAppRequest {
 	}
 
 	return &UpdateAppRequest{
-		Pool:        a.Pool,
 		TeamOwner:   a.TeamOwner,
 		Description: a.Description,
 		Plan:        plan,
@@ -26,21 +25,28 @@ func NewUpdateAppRequest(a *App) *UpdateAppRequest {
 }
 
 type App struct {
-	Name        string        `json:"name,omitempty"`
-	Description string        `json:"description,omitempty"`
-	Pool        string        `json:"pool" terraform:"framework"`
-	TeamOwner   string        `json:"teamowner,omitempty"`
-	Plan        *Plan         `json:"plan,omitempty"`
-	Units       []*Unit       `json:"units,omitempty"`
-	IP          string        `json:"ip,omitempty"`
-	Org         string        `json:"org,omitempty"`
-	Entrypoints []*Entrypoint `json:"entrypoints,omitempty"`
-	Routers     []*Router     `json:"routers,omitempty"`
-	Lock        *Lock         `json:"lock,omitempty"`
-	Tags        []string      `json:"tags,omitempty"`
-	Platform    string        `json:"platform,omitempty"`
-	Status      string        `json:"status,omitempty"`
-	Error       string        `json:"error,omitempty"` // not shows in API response
+	Name        string         `json:"name,omitempty"`
+	Description string         `json:"description,omitempty"`
+	TeamOwner   string         `json:"teamowner,omitempty"`
+	Plan        *Plan          `json:"plan,omitempty"`
+	Units       []*Unit        `json:"units,omitempty"`
+	IP          string         `json:"ip,omitempty"`
+	Org         string         `json:"org,omitempty"`
+	Entrypoints []*Entrypoint  `json:"entrypoints,omitempty"`
+	Routers     []*Router      `json:"routers,omitempty"`
+	Lock        *Lock          `json:"lock,omitempty"`
+	Tags        []string       `json:"tags,omitempty"`
+	Platform    string         `json:"platform,omitempty"`
+	Status      string         `json:"status,omitempty"`
+	Error       string         `json:"error,omitempty"` // not shows in API response
+	Environment AppEnvironment `json:"environment,omitempty"`
+}
+
+type AppEnvironment struct {
+	Id        string `json:"id"`
+	Name      string `json:"name"`
+	Namespace string `json:"namespace"`
+	Framework string `json:"framework"`
 }
 
 type Plan struct {

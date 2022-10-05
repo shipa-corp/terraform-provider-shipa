@@ -34,7 +34,7 @@ func TestClient_ListApps(t *testing.T) {
 }
 
 func TestClient_CreateApp(t *testing.T) {
-	payload := &App{Name: "app", Pool: "some-pool"}
+	payload := &App{Name: "app", Environment: AppEnvironment{Name: "some-env"}}
 
 	client, teardown := setupServer(
 		clientest.CheckPayloadHandler("/apps", payload, http.MethodPost),

@@ -276,9 +276,30 @@ var (
 			Type:     schema.TypeString,
 			Computed: true,
 		},
-		"framework": {
-			Type:     schema.TypeString,
+		"environment": {
+			Type:     schema.TypeList,
 			Computed: true,
+			MaxItems: 1,
+			Elem: &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"id": {
+						Type:     schema.TypeString,
+						Optional: false,
+					},
+					"name": {
+						Type:     schema.TypeString,
+						Optional: false,
+					},
+					"framework": {
+						Type:     schema.TypeString,
+						Optional: false,
+					},
+					"namespace": {
+						Type:     schema.TypeString,
+						Optional: false,
+					},
+				},
+			},
 		},
 		"teamowner": {
 			Type:     schema.TypeString,

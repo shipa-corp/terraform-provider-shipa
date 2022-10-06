@@ -284,19 +284,19 @@ var (
 				Schema: map[string]*schema.Schema{
 					"id": {
 						Type:     schema.TypeString,
-						Optional: false,
+						Computed: true,
 					},
 					"name": {
 						Type:     schema.TypeString,
-						Optional: false,
+						Computed: true,
 					},
 					"framework": {
 						Type:     schema.TypeString,
-						Optional: false,
+						Computed: true,
 					},
 					"namespace": {
 						Type:     schema.TypeString,
-						Optional: false,
+						Computed: true,
 					},
 				},
 			},
